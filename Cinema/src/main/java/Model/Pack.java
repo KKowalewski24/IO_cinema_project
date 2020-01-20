@@ -2,14 +2,12 @@ package Model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.var;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.LinkedList;
 import java.util.List;
-
 
 @Entity
 @Table(name = "PackH")

@@ -6,17 +6,13 @@ import DBO.SaleDAO;
 import DBO.UserDAO;
 import Model.*;
 import Tools.BaseDB;
-import View.Report.ReportPanel;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import lombok.var;
-import org.hibernate.mapping.Table;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -39,7 +35,7 @@ public class ReportGenerator {
 
             Image img = Image.getInstance(path.toAbsolutePath().toString());
 
-            img.scaleToFit(PageSize.A4.getWidth()/5, PageSize.A4.getHeight()/5);
+            img.scaleToFit(PageSize.A4.getWidth() / 5, PageSize.A4.getHeight() / 5);
             float x = (float) ((PageSize.A4.getWidth() - img.getScaledWidth()) * 0.5);
             float y = (float) (PageSize.A4.getHeight() - img.getScaledHeight() * 1.1);
             img.setAbsolutePosition(x, y);
@@ -50,21 +46,21 @@ public class ReportGenerator {
             preface.setAlignment(Element.ALIGN_CENTER);
 
             preface.add(img);
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
             preface.add(title);
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
             preface.add(reportTitle);
-            preface.add( Chunk.NEWLINE );
-            preface.add( Chunk.NEWLINE );
+            preface.add(Chunk.NEWLINE);
+            preface.add(Chunk.NEWLINE);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +94,7 @@ public class ReportGenerator {
             table.addCell("Duration");
             table.addCell("State");
 
-            for(Movie movie : movies) {
+            for (Movie movie : movies) {
                 table.addCell(movie.getTitle());
                 table.addCell(movie.getDescription());
                 table.addCell(movie.getMovieTime().toString());
@@ -132,14 +128,14 @@ public class ReportGenerator {
             var so = BaseDB.openConnection();
             so.beginTransaction();
             List<TnAData> tnadata = null;
-            if(dateFrom != null && dateTo != null) {
-                tnadata = so.createQuery("from TnAData where DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
+            if (dateFrom != null && dateTo != null) {
+                tnadata =
+                        so.createQuery("from TnAData where DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
             } else {
                 tnadata = so.createQuery("from TnAData").list();
             }
             so.getTransaction().commit();
             so.close();
-
 
             PdfPTable table = new PdfPTable(4);
 
@@ -148,11 +144,11 @@ public class ReportGenerator {
             table.addCell("Time from");
             table.addCell("Time to");
 
-
             List<User> currentUser = null;
-            for(TnAData data : tnadata) {
+            for (TnAData data : tnadata) {
                 currentUser = UserDAO.getAllById(data.getUserId());
-                table.addCell(String.join(" ", currentUser.get(0).getFirstName(), currentUser.get(0).getLastName()));
+                table.addCell(String.join(" ", currentUser.get(0).getFirstName(),
+                        currentUser.get(0).getLastName()));
                 table.addCell(String.valueOf(data.getDateDay()));
                 table.addCell(String.valueOf(data.getTimeFrom()));
                 table.addCell(String.valueOf(data.getTimeTo()));
@@ -169,7 +165,8 @@ public class ReportGenerator {
         }
     }
 
-    public static void generateIndividualWorkTimeReport(LocalDate dateFrom, LocalDate dateTo, long userId) throws IOException {
+    public static void generateIndividualWorkTimeReport(LocalDate dateFrom, LocalDate dateTo,
+                                                        long userId) throws IOException {
 
         try {
 
@@ -185,15 +182,15 @@ public class ReportGenerator {
             var so = BaseDB.openConnection();
             so.beginTransaction();
             List<TnAData> tnadata = null;
-            if(dateFrom != null && dateTo != null) {
-                tnadata = so.createQuery("from TnAData where  UsersId = " + String.valueOf(userId)+ " AND DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
+            if (dateFrom != null && dateTo != null) {
+                tnadata =
+                        so.createQuery("from TnAData where  UsersId = " + String.valueOf(userId) + " AND DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
             } else {
-                tnadata = so.createQuery("from TnAData where UsersId = " + String.valueOf(userId)).list();
+                tnadata =
+                        so.createQuery("from TnAData where UsersId = " + String.valueOf(userId)).list();
             }
             so.getTransaction().commit();
             so.close();
-
-
 
             PdfPTable table = new PdfPTable(4);
 
@@ -202,11 +199,11 @@ public class ReportGenerator {
             table.addCell("Time from");
             table.addCell("Time to");
 
-
             List<User> currentUser = null;
-            for(TnAData data : tnadata) {
+            for (TnAData data : tnadata) {
                 currentUser = UserDAO.getAllById(data.getUserId());
-                table.addCell(String.join(" ", currentUser.get(0).getFirstName(), currentUser.get(0).getLastName()));
+                table.addCell(String.join(" ", currentUser.get(0).getFirstName(),
+                        currentUser.get(0).getLastName()));
                 table.addCell(String.valueOf(data.getDateDay()));
                 table.addCell(String.valueOf(data.getTimeFrom()));
                 table.addCell(String.valueOf(data.getTimeTo()));
@@ -238,14 +235,14 @@ public class ReportGenerator {
             var so = BaseDB.openConnection();
             so.beginTransaction();
             List<TnAData> tnadata = null;
-            if(dateFrom != null && dateTo != null) {
-                tnadata = so.createQuery("from TnAData where DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
+            if (dateFrom != null && dateTo != null) {
+                tnadata =
+                        so.createQuery("from TnAData where DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
             } else {
                 tnadata = so.createQuery("from TnAData").list();
             }
             so.getTransaction().commit();
             so.close();
-
 
             PdfPTable table = new PdfPTable(4);
 
@@ -256,21 +253,22 @@ public class ReportGenerator {
 
             HashMap<Long, Integer> usersUniqe = new HashMap<>();
 
-            for(TnAData data: tnadata) {
+            for (TnAData data : tnadata) {
                 usersUniqe.putIfAbsent(data.getUserId(), 0);
             }
 
             int hours = 0;
-            for(TnAData data: tnadata) {
+            for (TnAData data : tnadata) {
                 hours = usersUniqe.get(data.getUserId());
                 hours += data.getTimeTo().getHours() - data.getTimeFrom().getHours();
                 usersUniqe.replace(data.getUserId(), hours);
             }
 
             List<User> currentUser = null;
-            for(Map.Entry<Long, Integer> entry : usersUniqe.entrySet()) {
+            for (Map.Entry<Long, Integer> entry : usersUniqe.entrySet()) {
                 currentUser = UserDAO.getAllById(entry.getKey());
-                table.addCell(String.join(" ", currentUser.get(0).getFirstName(), currentUser.get(0).getLastName()));
+                table.addCell(String.join(" ", currentUser.get(0).getFirstName(),
+                        currentUser.get(0).getLastName()));
                 table.addCell(String.valueOf(entry.getValue()));
                 table.addCell(String.valueOf(currentUser.get(0).getHourlyRate()));
                 table.addCell(String.valueOf(currentUser.get(0).getHourlyRate().multiply(BigDecimal.valueOf(entry.getValue()))));
@@ -287,7 +285,8 @@ public class ReportGenerator {
         }
     }
 
-    public static void generateIndividualSalaryReport(LocalDate dateFrom, LocalDate dateTo, long userId) throws IOException {
+    public static void generateIndividualSalaryReport(LocalDate dateFrom, LocalDate dateTo,
+                                                      long userId) throws IOException {
 
         try {
             Document document = new Document();
@@ -302,14 +301,15 @@ public class ReportGenerator {
             var so = BaseDB.openConnection();
             so.beginTransaction();
             List<TnAData> tnadata = null;
-            if(dateFrom != null && dateTo != null) {
-                tnadata = so.createQuery("from TnAData where  UsersId = " + String.valueOf(userId)+ " AND DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
+            if (dateFrom != null && dateTo != null) {
+                tnadata =
+                        so.createQuery("from TnAData where  UsersId = " + String.valueOf(userId) + " AND DateDay >= '" + String.valueOf(dateFrom) + "' AND DateDay <= '" + String.valueOf(dateTo) + "'").list();
             } else {
-                tnadata = so.createQuery("from TnAData where UsersId = " + String.valueOf(userId)).list();
+                tnadata =
+                        so.createQuery("from TnAData where UsersId = " + String.valueOf(userId)).list();
             }
             so.getTransaction().commit();
             so.close();
-
 
             PdfPTable table = new PdfPTable(4);
 
@@ -320,21 +320,22 @@ public class ReportGenerator {
 
             HashMap<Long, Integer> usersUniqe = new HashMap<>();
 
-            for(TnAData data: tnadata) {
+            for (TnAData data : tnadata) {
                 usersUniqe.putIfAbsent(data.getUserId(), 0);
             }
 
             int hours = 0;
-            for(TnAData data: tnadata) {
+            for (TnAData data : tnadata) {
                 hours = usersUniqe.get(data.getUserId());
                 hours += data.getTimeTo().getHours() - data.getTimeFrom().getHours();
                 usersUniqe.replace(data.getUserId(), hours);
             }
 
             List<User> currentUser = null;
-            for(Map.Entry<Long, Integer> entry : usersUniqe.entrySet()) {
+            for (Map.Entry<Long, Integer> entry : usersUniqe.entrySet()) {
                 currentUser = UserDAO.getAllById(entry.getKey());
-                table.addCell(String.join(" ", currentUser.get(0).getFirstName(), currentUser.get(0).getLastName()));
+                table.addCell(String.join(" ", currentUser.get(0).getFirstName(),
+                        currentUser.get(0).getLastName()));
                 table.addCell(String.valueOf(entry.getValue()));
                 table.addCell(String.valueOf(currentUser.get(0).getHourlyRate()));
                 table.addCell(String.valueOf(currentUser.get(0).getHourlyRate().multiply(BigDecimal.valueOf(entry.getValue()))));
@@ -377,10 +378,10 @@ public class ReportGenerator {
 
             float fSum = 0;
 
-            for(Reservation res : reservations) {
+            for (Reservation res : reservations) {
                 if (res.getReservationPrice() == 0) continue;
                 if ((fDate.compareTo(res.getReservationDate().toLocalDateTime().toLocalDate()) < 0
-                        &&  tDate.compareTo(res.getReservationDate().toLocalDateTime().toLocalDate()) > 0) ||
+                        && tDate.compareTo(res.getReservationDate().toLocalDateTime().toLocalDate()) > 0) ||
                         (fDate.compareTo(res.getReservationDate().toLocalDateTime().toLocalDate()) == 0
                                 && tDate.compareTo(res.getReservationDate().toLocalDateTime().toLocalDate()) == 0)) {
                     table.addCell("Reservation");
@@ -393,10 +394,10 @@ public class ReportGenerator {
 
             BigDecimal sum = new BigDecimal(fSum);
 
-            for(Sale s : sales) {
+            for (Sale s : sales) {
                 if (s.getPrice().equals(BigDecimal.ZERO)) continue;
                 if ((fDate.compareTo(s.getSaleDate().toLocalDateTime().toLocalDate()) < 0
-                        &&  tDate.compareTo(s.getSaleDate().toLocalDateTime().toLocalDate()) > 0) ||
+                        && tDate.compareTo(s.getSaleDate().toLocalDateTime().toLocalDate()) > 0) ||
                         (fDate.compareTo(s.getSaleDate().toLocalDateTime().toLocalDate()) == 0
                                 && tDate.compareTo(s.getSaleDate().toLocalDateTime().toLocalDate()) == 0)) {
                     table.addCell("Food Sale");
@@ -440,7 +441,7 @@ public class ReportGenerator {
 
             List<Sale> sales = SaleDAO.getAll();
             ArrayList<SalePO> positions = new ArrayList<SalePO>();
-            for(Sale s : sales) {
+            for (Sale s : sales) {
                 List<SalePO> pos = SaleDAO.getOrderContent(s.getId());
                 positions.addAll(pos);
             }
@@ -455,10 +456,10 @@ public class ReportGenerator {
 
             BigDecimal sum = new BigDecimal("0.0");
 
-            for(SalePO pos : positions) {
+            for (SalePO pos : positions) {
                 List<Sale> s = SaleDAO.getAllById(pos.getSale().getId());
                 if ((fDate.compareTo(s.get(0).getSaleDate().toLocalDateTime().toLocalDate()) < 0
-                        &&  tDate.compareTo(s.get(0).getSaleDate().toLocalDateTime().toLocalDate()) > 0) ||
+                        && tDate.compareTo(s.get(0).getSaleDate().toLocalDateTime().toLocalDate()) > 0) ||
                         (fDate.compareTo(s.get(0).getSaleDate().toLocalDateTime().toLocalDate()) == 0
                                 && tDate.compareTo(s.get(0).getSaleDate().toLocalDateTime().toLocalDate()) == 0)) {
                     table.addCell(String.valueOf(pos.getPack().getName()));
@@ -472,7 +473,6 @@ public class ReportGenerator {
             tableSum.addCell("Sum:");
             tableSum.addCell(sum.toString());
             //System.out.println("SUMA " + sum.toString());
-
 
             content.add(table);
             content.add(Chunk.NEWLINE);

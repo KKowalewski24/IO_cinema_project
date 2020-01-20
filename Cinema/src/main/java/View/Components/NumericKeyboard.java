@@ -2,7 +2,7 @@ package View.Components;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.event.Event;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,8 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-
-import javafx.event.ActionEvent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,7 +32,8 @@ public class NumericKeyboard extends GridPane implements Initializable {
     public NumericKeyboard() {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Components/NumericKeyboard.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Components" +
+                    "/NumericKeyboard.fxml"));
             //fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             Node n = fxmlLoader.load();
@@ -52,8 +51,8 @@ public class NumericKeyboard extends GridPane implements Initializable {
         }
     }
 
-
-    private ObjectProperty<EventHandler<MouseEvent>> propertyOnConfirm = new SimpleObjectProperty<EventHandler<MouseEvent>>();
+    private ObjectProperty<EventHandler<MouseEvent>> propertyOnConfirm =
+            new SimpleObjectProperty<EventHandler<MouseEvent>>();
 
     public final ObjectProperty<EventHandler<MouseEvent>> onConfirmProperty() {
         return propertyOnConfirm;

@@ -3,7 +3,6 @@ package DBO;
 import Model.Movie;
 import Tools.BaseDB;
 import Tools.Filter;
-import lombok.var;
 
 import java.util.List;
 
@@ -58,7 +57,8 @@ public class MovieDAO {
         String hql = "delete Movie where Id = :id";
         var q_main = so.createQuery(hql).setParameter("id", object.getId());
         q_main.executeUpdate();
-        var q_extra = so.createNativeQuery("delete from MoviePersonPersonType where MovieId = :Id").setParameter("Id", object.getId());
+        var q_extra = so.createNativeQuery("delete from MoviePersonPersonType where MovieId = " +
+                ":Id").setParameter("Id", object.getId());
         q_extra.executeUpdate();
         //so.delete(object);
         so.getTransaction().commit();

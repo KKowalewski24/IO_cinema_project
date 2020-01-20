@@ -1,9 +1,7 @@
 package DBO;
 
 import Model.SETTINGS;
-import Model.Sale;
 import Tools.BaseDB;
-import lombok.var;
 
 import java.util.List;
 
@@ -26,10 +24,11 @@ public class SettingsDAO {
         so.close();
     }
 
-    public static SETTINGS getByKey(String key){
+    public static SETTINGS getByKey(String key) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        var result = so.createQuery("from SETTINGS where Symbol = :Symbol").setParameter("Symbol", key).uniqueResult();
+        var result = so.createQuery("from SETTINGS where Symbol = :Symbol").setParameter("Symbol"
+                , key).uniqueResult();
         so.getTransaction().commit();
         so.close();
         return (SETTINGS) result;

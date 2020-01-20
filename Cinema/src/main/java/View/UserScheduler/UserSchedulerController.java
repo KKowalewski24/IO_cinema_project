@@ -6,17 +6,14 @@ import Controller.UserScheduler.UserManager;
 import Model.Schedule;
 import Model.User;
 import Tools.PermissionChecker;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -94,11 +91,12 @@ public class UserSchedulerController {
         // Fill layout
         for (int y = 1; y <= users.size(); y++) {
             User user = users.get(y - 1);
-            Label label = new Label(user.getFirstName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
+            Label label =
+                    new Label(user.getFirstName() + " " + user.getLastName() + " (" + user.getLogin() + ")");
             scheduleTable.add(label, y, 0);
         }
         for (int x = 1; x <= 24; x++) {
-            Timestamp time = new Timestamp(todayTime.getTime() + (60*60*1000*(x-1)));
+            Timestamp time = new Timestamp(todayTime.getTime() + (60 * 60 * 1000 * (x - 1)));
             LocalDateTime dateTime = time.toLocalDateTime();
             String hour = ((dateTime.getHour() < 10) ? "0" : "") + dateTime.getHour();
             String minutes = ((dateTime.getMinute() < 10) ? "0" : "") + dateTime.getMinute();
@@ -108,7 +106,7 @@ public class UserSchedulerController {
         for (int y = 1; y <= users.size(); y++) {
             for (int x = 1; x <= 24; x++) {
                 User user = users.get(y - 1);
-                Timestamp time = new Timestamp(todayTime.getTime() + (60*60*1000*(x-1)));
+                Timestamp time = new Timestamp(todayTime.getTime() + (60 * 60 * 1000 * (x - 1)));
                 TaskBox tb = new TaskBox(this, user, time);
                 scheduleTable.add(tb, y, x);
                 //Find matching schedule
@@ -147,7 +145,6 @@ public class UserSchedulerController {
         return taskManager;
     }
 
-    
     public void handleCreateUserButtonAction() {
         CreateNewUserDialog dialog = new CreateNewUserDialog(this);
     }

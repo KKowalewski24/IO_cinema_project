@@ -20,9 +20,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-import java.util.List;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MoviePanel implements Initializable {
@@ -42,7 +42,8 @@ public class MoviePanel implements Initializable {
         list = getList();
         id.setCellValueFactory(new PropertyValueFactory<SimpleMovie, Long>("id"));
         title.setCellValueFactory(new PropertyValueFactory<SimpleMovie, String>("title"));
-        description.setCellValueFactory(new PropertyValueFactory<SimpleMovie, String>("description"));
+        description.setCellValueFactory(new PropertyValueFactory<SimpleMovie, String>(
+                "description"));
         state.setCellValueFactory(new PropertyValueFactory<SimpleMovie, String>("state"));
         genre.setCellValueFactory(new PropertyValueFactory<SimpleMovie, String>("genre"));
         table.setItems(list);
@@ -50,7 +51,7 @@ public class MoviePanel implements Initializable {
         table.setRowFactory(tv -> {
             TableRow<SimpleMovie> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if (! row.isEmpty() && event.getButton()== MouseButton.PRIMARY
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
                         && event.getClickCount() == 2) {
 
                     SimpleMovie clickedMovie = row.getItem();
@@ -62,26 +63,30 @@ public class MoviePanel implements Initializable {
                     }
                 }
             });
-            return row ;
+            return row;
         });
     }
 
     public ObservableList<SimpleMovie> getList() {
         ObservableList<SimpleMovie> list = FXCollections.observableArrayList();
         List<Movie> movies = MovieDAO.getAll();
-        for (int i=0; i<movies.size(); i++) {
-            list.add(new SimpleMovie(movies.get(i).getId(), movies.get(i).getTitle(), movies.get(i).getDescription(),
-                    movies.get(i).getMovieState().getName(), movies.get(i).getMovieType().getName()));
+        for (int i = 0; i < movies.size(); i++) {
+            list.add(new SimpleMovie(movies.get(i).getId(), movies.get(i).getTitle(),
+                    movies.get(i).getDescription(),
+                    movies.get(i).getMovieState().getName(),
+                    movies.get(i).getMovieType().getName()));
         }
         return list;
     }
 
     public void onClickRow(Movie clickedMovie) throws IOException {
         MovieManager.currentMovie = clickedMovie;
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/displayMoviePanel/displayMoviePanel.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule" +
+                "/displayMoviePanel/displayMoviePanel.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
-        scene.getStylesheets().add(getClass().getResource("/MovieModule/displayMoviePanel/displayMoviePanel.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/MovieModule/displayMoviePanel" +
+                "/displayMoviePanel.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Movie details panel");
         stage.setResizable(false);
@@ -89,7 +94,8 @@ public class MoviePanel implements Initializable {
     }
 
     public void onClickHelp() throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/HelpPanel/helpPanel.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/HelpPanel" +
+                "/helpPanel.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
         scene.getStylesheets().add(getClass().getResource("/MovieModule/HelpPanel/helpPanel.css").toExternalForm());
@@ -100,10 +106,12 @@ public class MoviePanel implements Initializable {
     }
 
     public void onClickButton() throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/addMoviePanel/addMovie.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/addMoviePanel" +
+                "/addMovie.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
-        scene.getStylesheets().add(getClass().getResource("/MovieModule/addMoviePanel/addMovie.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/MovieModule/addMoviePanel/addMovie" +
+                ".css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Add movie panel");
         stage.setResizable(false);

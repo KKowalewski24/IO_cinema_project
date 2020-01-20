@@ -1,26 +1,22 @@
 package Model;
 
-import java.time.Duration;
-import java.util.List;
-import java.util.Optional;
-
+import Controller.MovieManager;
+import DBO.HallDAO;
+import DBO.SettingsDAO;
+import Model.SETTINGS;
+import Model.TimeTableExceptions.Performance.HallNotAvailableException;
+import Model.TimeTableExceptions.Performance.MovieNotAvailableException;
+import Model.TimeTableExceptions.Performance.TimeTableCreationException;
 import lombok.Getter;
 import lombok.Setter;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import DBO.HallDAO;
-import DBO.TimeTableDAO;
-import DBO.SettingsDAO;
-import Model.TimeTableExceptions.Performance.HallNotAvailableException;
-import Model.TimeTableExceptions.Performance.MovieNotAvailableException;
-import Model.TimeTableExceptions.Performance.TimeTableCreationException;
-import Model.SETTINGS;
 import javax.persistence.*;
-
-import Controller.MovieManager;
+import java.time.Duration;
+import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "Performance")
@@ -53,90 +49,93 @@ public class Performance {
     @Setter
     private String performanceType;
 
-    public Performance() {}
+    public Performance() {
+    }
 
-    private Movie findProperMovie(String movieTitle) throws MovieNotAvailableException{
+    private Movie findProperMovie(String movieTitle) throws MovieNotAvailableException {
         Optional<Movie> movieOptional = MovieManager.getAllMovies().stream()
-            .filter(movie -> {
-                return movie.getTitle().equals(movieTitle);
-            })
-            .findFirst();
-        if(!movieOptional.isPresent()){
+                .filter(movie -> {
+                    return movie.getTitle().equals(movieTitle);
+                })
+                .findFirst();
+        if (!movieOptional.isPresent()) {
             throw new MovieNotAvailableException("Can not find movie with title: " + movieTitle);
-        }else if(!movieOptional.get().getMovieState().getName().equals("Current")){
-            throw new MovieNotAvailableException("Selected movie is not available (not in 'Current' state)!");
+        } else if (!movieOptional.get().getMovieState().getName().equals("Current")) {
+            throw new MovieNotAvailableException("Selected movie is not available (not in " +
+                    "'Current' state)!");
         }
         return movieOptional.get();
     }
 
-    private Hall findProperHall(long hallId) throws HallNotAvailableException{
+    private Hall findProperHall(long hallId) throws HallNotAvailableException {
         List<Hall> halls = HallDAO.getAllById(hallId);
-        if(halls.size() == 0){
+        if (halls.size() == 0) {
             throw new HallNotAvailableException("Can not find hall with id: " + hallId);
         }
         return halls.get(0);
     }
 
-    private boolean checkPerformanceTypeMatchesHall(Hall hall, String performanceType){
-        if(performanceType.equals("2D")){
-            if(hall.getFlg2D() == 0)
+    private boolean checkPerformanceTypeMatchesHall(Hall hall, String performanceType) {
+        if (performanceType.equals("2D")) {
+            if (hall.getFlg2D() == 0)
                 return false;
-        }else if(performanceType.equals("3D")){
-            if(hall.getFlg3D() == 0)
+        } else if (performanceType.equals("3D")) {
+            if (hall.getFlg3D() == 0)
                 return false;
-        }else{
-            if(hall.getFlgVR() == 0)
-                return false;
-        }
-        return true;
-    }
-
-    private boolean checkPerformanceTypeMatchesMovie(Movie movie, String performanceType){
-        if(performanceType.equals("2D")){
-            if(movie.getFlg2D() == 0)
-                return false;
-        }else if(performanceType.equals("3D")){
-            if(movie.getFlg3D() == 0)
-                return false;
-        }else{
-            if(movie.getFlgVR() == 0)
+        } else {
+            if (hall.getFlgVR() == 0)
                 return false;
         }
         return true;
     }
 
-    public Performance(String movieTitle, long hallId, String performanceType, long id) throws TimeTableCreationException{
+    private boolean checkPerformanceTypeMatchesMovie(Movie movie, String performanceType) {
+        if (performanceType.equals("2D")) {
+            if (movie.getFlg2D() == 0)
+                return false;
+        } else if (performanceType.equals("3D")) {
+            if (movie.getFlg3D() == 0)
+                return false;
+        } else {
+            if (movie.getFlgVR() == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public Performance(String movieTitle, long hallId, String performanceType, long id) throws TimeTableCreationException {
 
         Movie movie = findProperMovie(movieTitle);
         Hall hall = findProperHall(hallId);
 
-        if(!checkPerformanceTypeMatchesHall(hall, performanceType)){
-            throw new HallNotAvailableException(performanceType + "films can not be shown in this hall!");
+        if (!checkPerformanceTypeMatchesHall(hall, performanceType)) {
+            throw new HallNotAvailableException(performanceType + "films can not be shown in this" +
+                    " hall!");
         }
-        
-        if(!checkPerformanceTypeMatchesMovie(movie, performanceType)){
+
+        if (!checkPerformanceTypeMatchesMovie(movie, performanceType)) {
             throw new MovieNotAvailableException("This film can not be shown in " + performanceType);
         }
 
         this.movie = movie;
         this.hall = hall;
         SETTINGS adsDuration = SettingsDAO.getByKey("ads_duration");
-        if(adsDuration != null)
+        if (adsDuration != null)
             this.adsDuration = Duration.ofMinutes(Integer.parseInt(adsDuration.getValue()));
         else
             this.adsDuration = Duration.ofSeconds(0);
         this.performanceType = performanceType;
 
-        if(id > 0){
+        if (id > 0) {
             this.Id = id;
         }
     }
 
-    public Performance(String movieTitle, long hallId, String performanceType) throws TimeTableCreationException{
+    public Performance(String movieTitle, long hallId, String performanceType) throws TimeTableCreationException {
         this(movieTitle, hallId, performanceType, 0);
     }
 
-    public Duration getDuration(){
+    public Duration getDuration() {
         Duration movieDuration = Duration.ofSeconds(0);
         movieDuration = movieDuration.plusHours(movie.getMovieTime().getHours());
         movieDuration = movieDuration.plusMinutes(movie.getMovieTime().getMinutes());

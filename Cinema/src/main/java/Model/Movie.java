@@ -57,7 +57,7 @@ public class Movie {
     @Getter
     @Setter
     private Time movieTime;
-  
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
     @JoinColumn(name = "MovieId", referencedColumnName = "Id")
@@ -73,7 +73,8 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(short flg2D, short flg3D, short flgVR, MovieType movieType, MovieState movieState, String title, String description, Time movieTime) {
+    public Movie(short flg2D, short flg3D, short flgVR, MovieType movieType,
+                 MovieState movieState, String title, String description, Time movieTime) {
         this.flg2D = flg2D;
         this.flg3D = flg3D;
         this.flgVR = flgVR;
@@ -85,7 +86,9 @@ public class Movie {
         this.peoples = new LinkedList<>();
     }
 
-    public Movie(short flg2D, short flg3D, short flgVR, MovieType movieType, MovieState movieState, String title, String description, Time movieTime, List<PersonJob> peoples) {
+    public Movie(short flg2D, short flg3D, short flgVR, MovieType movieType,
+                 MovieState movieState, String title, String description, Time movieTime,
+                 List<PersonJob> peoples) {
         this.flg2D = flg2D;
         this.flg3D = flg3D;
         this.flgVR = flgVR;

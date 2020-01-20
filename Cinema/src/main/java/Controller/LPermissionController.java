@@ -4,9 +4,7 @@ import DBO.UserDAO;
 import Model.DICT.Permissions;
 import Model.User;
 import Tools.Filter;
-
 import Tools.LoginException;
-
 
 import java.util.Collections;
 import java.util.List;
@@ -21,6 +19,7 @@ TODO GUI
 /**
  * Kontroler odpowiedzialny za autoryzacje uzytkownika
  * Uzywac tylko przez PermissionChecker
+ *
  * @see Tools.PermissionChecker
  */
 public class LPermissionController {
@@ -32,7 +31,9 @@ public class LPermissionController {
     public Integer getFailCounter() {
         return failCounter;
     }
+
     private Integer failCounter = 0;
+
     public static LPermissionController getInstance() {
         if (ourInstance == null) {
             ourInstance = new LPermissionController();
@@ -43,7 +44,6 @@ public class LPermissionController {
     private LPermissionController() {
         currentUser = new User();
     }
-
 
     private boolean checkLogin(String login) {
         Filter fl = new Filter();
@@ -71,8 +71,7 @@ public class LPermissionController {
             currentUser = result;
             System.out.println("Correct Password");
             return true;
-        }
-        else {
+        } else {
             System.err.println("Password is not correct");
             failCounter++;
             throw new LoginException("Password is not correct");
@@ -80,11 +79,10 @@ public class LPermissionController {
         }
     }
 
-
-
     /**
      * Autoryzacja uzytkownika w systemie
-     * @param login Login uzytkownika
+     *
+     * @param login    Login uzytkownika
      * @param password Haslo Uzytkownika
      * @return true jezeli autoryzacja przebiegla pomyslnie , inaczej false
      */
@@ -92,12 +90,13 @@ public class LPermissionController {
         if (checkLogin(login)) {
             if (checkPassword(login, password)) {
                 currentUser.setPasswordHash("");
-                failCounter=0;
+                failCounter = 0;
                 return true;
             }
         }
         throw new LoginException("Logowanie nie powiodło się");
     }
+
     private boolean checkLoginCode(String code) {
 //
         String sql = "SELECT U.login from User U WHERE U.codeHash='" + code +
@@ -116,7 +115,7 @@ public class LPermissionController {
         return false;
     }
 
-    private boolean checkCode(String code){
+    private boolean checkCode(String code) {
         String sql = "from User U WHERE U.codeHash='" + code + "'";
         User result = (User) UserDAO.execSQL(sql).get(0);
         if (result.getCodeHash().equals(code)) {
@@ -130,11 +129,11 @@ public class LPermissionController {
 
     }
 
-        public boolean login(String code){
-        if(checkLoginCode(code)){
-            if(checkCode(code)){
+    public boolean login(String code) {
+        if (checkLoginCode(code)) {
+            if (checkCode(code)) {
                 currentUser.setPasswordHash("");
-                failCounter=0;
+                failCounter = 0;
                 return true;
             }
         }
@@ -143,9 +142,9 @@ public class LPermissionController {
 
     }
 
-
     /**
      * Lista permitow dla aktualnego uzytkownika
+     *
      * @return Zwraca liste wszystkich zezwolen jakie ma uzytkownik
      */
     public List getPermissionsList() {
@@ -158,6 +157,7 @@ public class LPermissionController {
 
     /**
      * Sprawdza czy uzytkownik posiada permita z pomoca inta
+     *
      * @param PermissionCode kod zezwolenia jako int
      * @return Zwraca true jezeli uzytkownik ma przypisane zezwolenie o kodzie PermissionCode
      */
@@ -176,6 +176,7 @@ public class LPermissionController {
 
     /**
      * Sprawdza czy uzytkownik posiada permita z pomoca stringa
+     *
      * @param PermissionName nazwa zezwolenia jako string
      * @return Zwraca true jezeli uzytkownik ma przypisane zezwolenie o nazwie PermissionName
      */
@@ -195,36 +196,36 @@ public class LPermissionController {
     private boolean checkIfLogged() {
         return currentUser.getLogin() == null;
     }
+
     public void checkFailCounter() throws Exception {
         class RemindTask extends TimerTask {
             public void run() {
-                failCounter=0;
-                timerSet=false;
+                failCounter = 0;
+                timerSet = false;
                 System.out.println("The trial counter has been reset");
                 timer.cancel(); //Terminate the timer thread
             }
         }
-        if(getFailCounter()>=4)
-        {
-            failCounter=5;
-            if(!timerSet) {
+        if (getFailCounter() >= 4) {
+            failCounter = 5;
+            if (!timerSet) {
                 timer = new Timer();
 //                How many seconds for timeout
                 int seconds = 5;
                 timer.schedule(new RemindTask(), seconds * 1000);
-                timerSet=true;
+                timerSet = true;
             }
             throw new Exception("Limit of 5 login attempts exceeded");
         }
     }
 
-
     public User getCurrentUser() {
         return currentUser;
     }
-    public void logOut(){
+
+    public void logOut() {
         System.out.println("LogOut currentUser");
-        currentUser=null;
+        currentUser = null;
         System.out.println(currentUser);
     }
 }

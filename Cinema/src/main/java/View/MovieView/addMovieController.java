@@ -21,7 +21,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -78,32 +77,33 @@ public class addMovieController implements Initializable {
 
         //adding genres
         List<MovieType> types = MovieTypeDAO.getAll();
-        for (int i=0; i<types.size(); i++) {
+        for (int i = 0; i < types.size(); i++) {
             movieTypes.add(new SimpleMovieGenre(types.get(i).getId(), types.get(i).getName()));
         }
         List typeList = new ArrayList();
-        for(int i=0; i<movieTypes.size();i++){
+        for (int i = 0; i < movieTypes.size(); i++) {
             typeList.add(movieTypes.get(i).getGenre());
         }
         Genre.getItems().addAll(typeList);
         //adding states
         List<MovieState> states = MovieStateDAO.getAll();
-        for (int i=0; i<states.size(); i++) {
+        for (int i = 0; i < states.size(); i++) {
             movieStates.add(new SimpleMovieState(states.get(i).getId(), states.get(i).getName()));
         }
         List stateList = new ArrayList();
-        for(int i=0; i<movieStates.size();i++){
+        for (int i = 0; i < movieStates.size(); i++) {
             stateList.add(movieStates.get(i).getState());
         }
         MovieState.getItems().addAll(stateList);
 
-        SpinnerValueFactory minutes = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 200, 90, 2);
+        SpinnerValueFactory minutes = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 200,
+                90, 2);
         Duration.setValueFactory(minutes);
 
         MovieManager.workingPersons.clear();
         updating = false;
 
-        if(MovieManager.isEdit) {
+        if (MovieManager.isEdit) {
             fillAllForms();
             updateList();
             MovieManager.isEdit = false;
@@ -117,13 +117,14 @@ public class addMovieController implements Initializable {
         for (int i = 0; i < MovieManager.workingPersons.size(); i++) {
             Person person = MovieManager.workingPersons.get(i).getPerson();
             PersonType type = MovieManager.workingPersons.get(i).getPersonType();
-            list.add(new SimplePersonwType(person.getId(), person.getFirstName(), person.getLastName(), type.getName()));
+            list.add(new SimplePersonwType(person.getId(), person.getFirstName(),
+                    person.getLastName(), type.getName()));
         }
         return list;
     }
 
-    public void updateList (){
-        if(!(MovieManager.workingPersons.isEmpty())) {
+    public void updateList() {
+        if (!(MovieManager.workingPersons.isEmpty())) {
             peopleInvolved.setItems(getList());
         }
         if (MovieManager.isEdit) {
@@ -131,24 +132,31 @@ public class addMovieController implements Initializable {
             for (int i = 0; i < MovieManager.currentMovie.getPeoples().size(); i++) {
                 Person person = MovieManager.currentMovie.getPeoples().get(i).getPerson();
                 PersonType type = MovieManager.currentMovie.getPeoples().get(i).getPersonType();
-                list.add(new SimplePersonwType(person.getId(), person.getFirstName(), person.getLastName(), type.getName()));
+                list.add(new SimplePersonwType(person.getId(), person.getFirstName(),
+                        person.getLastName(), type.getName()));
             }
             peopleInvolved.setItems(list);
-            MovieManager.workingPersons = new ArrayList<PersonJob>(MovieManager.currentMovie.getPeoples());
+            MovieManager.workingPersons =
+                    new ArrayList<PersonJob>(MovieManager.currentMovie.getPeoples());
         }
     }
 
     public class SimpleMovieGenre {
         private final SimpleLongProperty ID;
         private final SimpleStringProperty genre;
+
         public SimpleMovieGenre(Long ID, String genre) {
             this.ID = new SimpleLongProperty(ID);
             this.genre = new SimpleStringProperty(genre);
         }
+
         public String getGenre() {
             return genre.get();
         }
-        public Long getID() { return ID.get(); }
+
+        public Long getID() {
+            return ID.get();
+        }
     }
 
     public class SimpleMovieState {
@@ -159,10 +167,14 @@ public class addMovieController implements Initializable {
             this.ID = new SimpleLongProperty(ID);
             this.state = new SimpleStringProperty(state);
         }
+
         public String getState() {
             return state.get();
         }
-        public Long getID() { return ID.get(); }
+
+        public Long getID() {
+            return ID.get();
+        }
     }
 
     public boolean checkAllFilled() {
@@ -177,17 +189,17 @@ public class addMovieController implements Initializable {
             return false;
         }
 
-        if(Genre.getSelectionModel().isEmpty()) {
+        if (Genre.getSelectionModel().isEmpty()) {
             alertPopUp("Genre must be selected!");
             return false;
         }
 
-        if(MovieState.getSelectionModel().isEmpty()) {
+        if (MovieState.getSelectionModel().isEmpty()) {
             alertPopUp("State must be selected!");
             return false;
         }
 
-        if(!flg2D.isSelected() && !flg3D.isSelected() && !flgVR.isSelected()) {
+        if (!flg2D.isSelected() && !flg3D.isSelected() && !flgVR.isSelected()) {
             alertPopUp("At least one mode must be selected");
             return false;
         }
@@ -205,13 +217,13 @@ public class addMovieController implements Initializable {
 
     public void onClickAddMovie() {
         //checking if everything is filled
-        if(!checkAllFilled()) {
+        if (!checkAllFilled()) {
             return;
         }
 
         //getting genre and state from selection
         Long genreID;
-        for(int i=0; i<movieTypes.size();i++){
+        for (int i = 0; i < movieTypes.size(); i++) {
             if (movieTypes.get(i).getGenre().equals((String) Genre.getValue())) {
                 genreID = movieTypes.get(i).getID();
                 List<MovieType> sG = MovieTypeDAO.getAllById(genreID);
@@ -219,7 +231,7 @@ public class addMovieController implements Initializable {
             }
         }
         Long stateID;
-        for(int i=0; i<movieStates.size();i++){
+        for (int i = 0; i < movieStates.size(); i++) {
             if (movieStates.get(i).getState().equals((String) MovieState.getValue())) {
                 stateID = movieStates.get(i).getID();
                 List<MovieState> sS = MovieStateDAO.getAllById(stateID);
@@ -244,8 +256,8 @@ public class addMovieController implements Initializable {
 
         //displaying and getting duration
         dur = (int) Duration.getValue();
-        int h =                                          dur/60;
-        int m = dur - (h*60);
+        int h = dur / 60;
+        int m = dur - (h * 60);
         String hstring = String.valueOf(h);
         String mstring = String.valueOf(m);
         StringBuilder sb = new StringBuilder();
@@ -259,7 +271,7 @@ public class addMovieController implements Initializable {
 
         //creating a list of personJob objects using Person and Type from addPerson window
         List<PersonJob> involved = new ArrayList<>();
-        for(int i=0; i<MovieManager.workingPersons.size(); i++) {
+        for (int i = 0; i < MovieManager.workingPersons.size(); i++) {
             Person person = MovieManager.workingPersons.get(i).getPerson();
             PersonType type = MovieManager.workingPersons.get(i).getPersonType();
             PersonJob newPerson = new PersonJob(person, type);
@@ -267,7 +279,8 @@ public class addMovieController implements Initializable {
         }
         //creating a new Movie
         if (!updating) {
-            MovieManager.createMovie(flag2d, flag3d, flagVR, selectedGenre, selectedState, Title.getText(), Description.getText(), d, involved);
+            MovieManager.createMovie(flag2d, flag3d, flagVR, selectedGenre, selectedState,
+                    Title.getText(), Description.getText(), d, involved);
             closeAllStagesAndLoadNewMainStage();
             MovieManager.workingPersons.clear();
         }
@@ -285,7 +298,7 @@ public class addMovieController implements Initializable {
             movie.setMovieTime(d);
             int size = movie.getPeoples().size();
             System.out.println("trap");
-            if(movie.getPeoples().size() < involved.size()) {
+            if (movie.getPeoples().size() < involved.size()) {
                 for (int i = movie.getPeoples().size(); i < involved.size(); i++) {
                     movie.addPerson(involved.get(i));
                 }
@@ -298,14 +311,16 @@ public class addMovieController implements Initializable {
     }
 
     public void onClickAddPerson() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MovieModule/addPersonToMoviePanel/addPersonToMoviePanel.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/MovieModule" +
+                "/addPersonToMoviePanel/addPersonToMoviePanel.fxml"));
         Parent root = (Parent) loader.load();
         addPersonToMovieController ctrl = loader.getController();
         ctrl.setController(this);
 
         Stage stage = new Stage();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("/MovieModule/addPersonToMoviePanel/addPersonToMoviePanel.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/MovieModule/addPersonToMoviePanel" +
+                "/addPersonToMoviePanel.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Add person panel");
         stage.setResizable(false);
@@ -317,10 +332,12 @@ public class addMovieController implements Initializable {
             Stage stage = (Stage) addMovieButton.getScene().getWindow();
             stage.close();
 
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel/mainMovie.fxml"));
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel" +
+                    "/mainMovie.fxml"));
             Stage mainStage = new Stage();
             Scene scene = new Scene(fxmlLoader);
-            scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie" +
+                    ".css").toExternalForm());
             mainStage.setScene(scene);
             mainStage.show();
 
@@ -350,16 +367,17 @@ public class addMovieController implements Initializable {
 
         int minutes = toMins(movie.getMovieTime().toString());
 
-        SpinnerValueFactory mins = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 200, minutes, 2);
+        SpinnerValueFactory mins = new SpinnerValueFactory.IntegerSpinnerValueFactory(60, 200,
+                minutes, 2);
         Duration.setValueFactory(mins);
 
-        if(movie.getFlg2D() > 0){
+        if (movie.getFlg2D() > 0) {
             flg2D.setSelected(true);
         }
-        if(movie.getFlg3D() > 0){
+        if (movie.getFlg3D() > 0) {
             flg3D.setSelected(true);
         }
-        if(movie.getFlgVR() > 0){
+        if (movie.getFlgVR() > 0) {
             flgVR.setSelected(true);
         }
 
@@ -379,21 +397,27 @@ public class addMovieController implements Initializable {
         private final SimpleStringProperty Lastname;
         private SimpleStringProperty Type;
 
-        public SimplePersonwType(Long ID, String Name, String Lastname, String Type){
+        public SimplePersonwType(Long ID, String Name, String Lastname, String Type) {
             this.ID = new SimpleLongProperty(ID);
             this.Name = new SimpleStringProperty(Name);
             this.Lastname = new SimpleStringProperty(Lastname);
             this.Type = new SimpleStringProperty(Type);
         }
-        public String getName(){
+
+        public String getName() {
             return Name.get();
         }
-        public String getLastname(){
+
+        public String getLastname() {
             return Lastname.get();
         }
+
         public long getID() {
             return ID.get();
         }
-        public String getType() { return Type.get();}
+
+        public String getType() {
+            return Type.get();
+        }
     }
 }

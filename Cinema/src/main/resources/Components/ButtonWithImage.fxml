@@ -5,14 +5,16 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane maxHeight="100.0" maxWidth="100.0" styleClass="darkButton" stylesheets="@ButtonWithImagesStyle.css"
+<StackPane maxHeight="100.0" maxWidth="100.0" styleClass="darkButton"
+           stylesheets="@ButtonWithImagesStyle.css"
            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
 
     <children>
         <VBox alignment="CENTER">
             <ImageView fx:id="buttonImage" fitHeight="50.0" fitWidth="50.0">
             </ImageView>
-            <Label fx:id="buttonText" alignment="CENTER" prefHeight="38.0" prefWidth="98.0" styleClass="buttonLabel"
+            <Label fx:id="buttonText" alignment="CENTER" prefHeight="38.0" prefWidth="98.0"
+                   styleClass="buttonLabel"
                    text="Zamknij aplikację" textAlignment="CENTER" wrapText="true"/>
         </VBox>
     </children>

@@ -14,16 +14,18 @@ public class SimpleSale {
     private SimpleStringProperty packName;
     private SimpleIntegerProperty amount;
     private SimpleDoubleProperty price;
-    public List<Pair<Long,Integer>> productInSale;
+    public List<Pair<Long, Integer>> productInSale;
 
-    public SimpleSale(String packName, int amount, Double price, List<Pair<Long,Integer>> listOfProducts) {
+    public SimpleSale(String packName, int amount, Double price,
+                      List<Pair<Long, Integer>> listOfProducts) {
         this.packName = new SimpleStringProperty(packName);
         this.amount = new SimpleIntegerProperty(amount);
         this.price = new SimpleDoubleProperty(price);
         this.productInSale = listOfProducts;
     }
 
-    public SimpleSale(String packName, int amount, Double price, List<Pair<Long,Integer>> listOfProducts, long packHId) {
+    public SimpleSale(String packName, int amount, Double price,
+                      List<Pair<Long, Integer>> listOfProducts, long packHId) {
         this.packName = new SimpleStringProperty(packName);
         this.amount = new SimpleIntegerProperty(amount);
         this.price = new SimpleDoubleProperty(price);
@@ -31,10 +33,20 @@ public class SimpleSale {
         this.packHId = new SimpleLongProperty(packHId);
     }
 
-    public String getPackName(){return this.packName.get();}
-    public long getAmount(){return this.amount.get();}
-    public double getPrice(){return this.price.get();}
-    public long getPackHId() { return this.packHId.get();}
+    public String getPackName() {
+        return this.packName.get();
+    }
 
+    public long getAmount() {
+        return this.amount.get();
+    }
+
+    public double getPrice() {
+        return this.price.get();
+    }
+
+    public long getPackHId() {
+        return this.packHId.get();
+    }
 
 }

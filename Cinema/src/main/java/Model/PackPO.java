@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-
 @Entity
 @Table(name = "PackPO")
 public class PackPO {
@@ -22,7 +21,6 @@ public class PackPO {
     @Getter
     @Setter
     private Pack pack;
-
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "ProductId")

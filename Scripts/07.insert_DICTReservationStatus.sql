@@ -1,2 +1,4 @@
-INSERT INTO DICTReservationStatus (Name) VALUES ('W trakcie');
-INSERT INTO DICTReservationStatus (Name) VALUES ('Zaplacone');
+INSERT INTO dictreservationstatus (name)
+VALUES ('W trakcie');
+INSERT INTO dictreservationstatus (name)
+VALUES ('Zaplacone');

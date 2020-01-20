@@ -13,6 +13,7 @@ public class UserManager {
         users = UserDAO.getAll();
         return users;
     }
+
     public void updateUser(User user) {
         UserDAO.insertUpdate(user);
     }

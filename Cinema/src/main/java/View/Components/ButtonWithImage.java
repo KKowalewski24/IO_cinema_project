@@ -1,11 +1,9 @@
 package View.Components;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,7 +15,6 @@ import java.util.ResourceBundle;
 
 public class ButtonWithImage extends StackPane implements Initializable {
 
-
     @FXML
     private Label buttonText;
 
@@ -27,7 +24,8 @@ public class ButtonWithImage extends StackPane implements Initializable {
     public ButtonWithImage() {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Components/ButtonWithImage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Components" +
+                    "/ButtonWithImage.fxml"));
             //fxmlLoader.setRoot(this);
             fxmlLoader.setController(this);
             Node n = fxmlLoader.load();
@@ -36,7 +34,6 @@ public class ButtonWithImage extends StackPane implements Initializable {
             throw new RuntimeException(exception);
         }
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -46,11 +46,11 @@ public class Reservation {
     @Setter
     private float reservationPrice;
 
-
     public Reservation() {
     }
 
-    public Reservation(int flgPosX, int flgPosY, ReservationStatus reservationStatus, TimeTable timeTable, Timestamp reservationDate) {
+    public Reservation(int flgPosX, int flgPosY, ReservationStatus reservationStatus,
+                       TimeTable timeTable, Timestamp reservationDate) {
         this.flgPosX = flgPosX;
         this.flgPosY = flgPosY;
         this.reservationStatus = reservationStatus;
@@ -58,7 +58,8 @@ public class Reservation {
         this.reservationDate = reservationDate;
     }
 
-    public Reservation(int flgPosX, int flgPosY, ReservationStatus reservationStatus, TimeTable timeTable, Timestamp reservationDate, float reservationPrice) {
+    public Reservation(int flgPosX, int flgPosY, ReservationStatus reservationStatus,
+                       TimeTable timeTable, Timestamp reservationDate, float reservationPrice) {
         this.flgPosX = flgPosX;
         this.flgPosY = flgPosY;
         this.reservationStatus = reservationStatus;

@@ -47,7 +47,8 @@ public class Hall {
     public Hall() {
     }
 
-    public Hall(short flg2D, short flg3D, short flgVR, int flgX, int flgY, String name, String description) {
+    public Hall(short flg2D, short flg3D, short flgVR, int flgX, int flgY, String name,
+                String description) {
         this.flg2D = flg2D;
         this.flg3D = flg3D;
         this.flgVR = flgVR;

@@ -36,14 +36,13 @@ public class ReportPanel implements Initializable {
 
         list = FXCollections.observableArrayList(
                 "All Movies Report",
-               "Work time report",
+                "Work time report",
                 "Individual Work time report",
                 "Salary report",
                 "Individual Salary report",
                 "Incomes Report",
                 "Food Sale Report"
         );
-
 
         reportList.getItems().addAll(list);
         reportList.setValue(list.get(0));
@@ -52,9 +51,7 @@ public class ReportPanel implements Initializable {
 
         List<String> userIds = new ArrayList<>();
 
-
-
-        for(User user : users) {
+        for (User user : users) {
             userIds.add(String.valueOf(user.getId()));
         }
 
@@ -68,8 +65,7 @@ public class ReportPanel implements Initializable {
         System.out.println(toDate.getValue());
         System.out.println(fromDate.getValue());
 
-
-        if(reportList.getSelectionModel().isEmpty()) {
+        if (reportList.getSelectionModel().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Report");
             alert.setHeaderText(null);
@@ -84,27 +80,33 @@ public class ReportPanel implements Initializable {
                 break;
             }
             case "Work time report": {
-                Controller.ReportGenerator.generateWorkTimeReport(fromDate.getValue(), toDate.getValue());
+                Controller.ReportGenerator.generateWorkTimeReport(fromDate.getValue(),
+                        toDate.getValue());
                 break;
             }
             case "Individual Work time report": {
-                Controller.ReportGenerator.generateIndividualWorkTimeReport(fromDate.getValue(), toDate.getValue(), Long.parseLong(userCombo.getValue()));
+                Controller.ReportGenerator.generateIndividualWorkTimeReport(fromDate.getValue(),
+                        toDate.getValue(), Long.parseLong(userCombo.getValue()));
                 break;
             }
             case "Salary report": {
-                Controller.ReportGenerator.generateSalaryReport(fromDate.getValue(), toDate.getValue());
+                Controller.ReportGenerator.generateSalaryReport(fromDate.getValue(),
+                        toDate.getValue());
                 break;
             }
             case "Individual Salary report": {
-                Controller.ReportGenerator.generateIndividualSalaryReport(fromDate.getValue(), toDate.getValue(), Long.parseLong(userCombo.getValue()));
+                Controller.ReportGenerator.generateIndividualSalaryReport(fromDate.getValue(),
+                        toDate.getValue(), Long.parseLong(userCombo.getValue()));
                 break;
             }
             case "Incomes Report": {
-                Controller.ReportGenerator.generateIncomesReport(fromDate.getValue(), toDate.getValue());
+                Controller.ReportGenerator.generateIncomesReport(fromDate.getValue(),
+                        toDate.getValue());
                 break;
             }
             case "Food Sale Report": {
-                Controller.ReportGenerator.generateFoodSaleReport(fromDate.getValue(), toDate.getValue());
+                Controller.ReportGenerator.generateFoodSaleReport(fromDate.getValue(),
+                        toDate.getValue());
                 break;
             }
 

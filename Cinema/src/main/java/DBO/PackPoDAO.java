@@ -1,9 +1,7 @@
 package DBO;
 
-
 import Model.PackPO;
 import Tools.BaseDB;
-import lombok.var;
 import org.hibernate.query.Query;
 
 import java.math.BigDecimal;
@@ -37,7 +35,7 @@ public class PackPoDAO {
         return result;
     }
 
-    public static void instertInto(long Hid, long productId, BigDecimal amount){
+    public static void instertInto(long Hid, long productId, BigDecimal amount) {
         var so = BaseDB.openConnection();
     }
 
@@ -50,7 +48,6 @@ public class PackPoDAO {
                 .commit();
         so.close();
     }
-
 
 //    public static Boolean checkAmount(long Id, int amount, int prevAmount){
 //

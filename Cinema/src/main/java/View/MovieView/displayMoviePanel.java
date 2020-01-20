@@ -9,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,25 +47,25 @@ public class displayMoviePanel implements Initializable {
         state.setText(movie.getMovieState().getName());
         duration.setText(movie.getMovieTime().toString());
 
-        if(movie.getFlg2D() > 0) {
+        if (movie.getFlg2D() > 0) {
             flg2D.setSelected(true);
         } else {
             flg2D.setSelected(false);
         }
 
-        if(movie.getFlg3D() > 0) {
+        if (movie.getFlg3D() > 0) {
             flg3D.setSelected(true);
         } else {
             flg3D.setSelected(false);
         }
 
-        if(movie.getFlgVR() > 0) {
+        if (movie.getFlgVR() > 0) {
             flgVR.setSelected(true);
         } else {
             flgVR.setSelected(false);
         }
 
-        for(int i=0; i<movie.getPeoples().size(); i++){
+        for (int i = 0; i < movie.getPeoples().size(); i++) {
             peopleName.setText(peopleName.getText() + movie.getPeoples().get(i).getPerson().getFirstName() + '\n');
             peopleSurname.setText(peopleSurname.getText() + movie.getPeoples().get(i).getPerson().getLastName() + '\n');
             peopleType.setText(peopleType.getText() + movie.getPeoples().get(i).getPersonType().getName() + '\n');
@@ -85,13 +84,15 @@ public class displayMoviePanel implements Initializable {
         closeAllStagesAndLoadNewMainStage();
         Parent fxmlLoader = null;
         try {
-            fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/addMoviePanel/addMovie.fxml"));
+            fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/addMoviePanel" +
+                    "/addMovie.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
-        scene.getStylesheets().add(getClass().getResource("/MovieModule/addMoviePanel/addMovie.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/MovieModule/addMoviePanel/addMovie" +
+                ".css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Add movie panel");
         stage.setResizable(false);
@@ -103,10 +104,12 @@ public class displayMoviePanel implements Initializable {
             Stage stage = (Stage) delete.getScene().getWindow();
             stage.close();
 
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel/mainMovie.fxml"));
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel" +
+                    "/mainMovie.fxml"));
             Stage mainStage = new Stage();
             Scene scene = new Scene(fxmlLoader);
-            scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie" +
+                    ".css").toExternalForm());
             mainStage.setScene(scene);
             mainStage.setTitle("Main Movie Panel");
             mainStage.setResizable(false);

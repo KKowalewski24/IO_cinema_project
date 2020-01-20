@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 @Entity
 @Table(name = "Users")
 public class User {
@@ -53,7 +52,6 @@ public class User {
     @Setter
     private BigDecimal hourlyRate;
 
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "UsersPermission",
             inverseJoinColumns = @JoinColumn(name = "PermissionId", referencedColumnName = "Id"),
@@ -65,7 +63,8 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String login, String passwordHash, String codeHash, BigDecimal baseSalary, BigDecimal hourlyRate) {
+    public User(String firstName, String lastName, String login, String passwordHash,
+                String codeHash, BigDecimal baseSalary, BigDecimal hourlyRate) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.login = login;

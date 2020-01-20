@@ -3,7 +3,6 @@ package DBO;
 import Model.DICT.ScheduleStatus;
 import Model.Schedule;
 import Tools.BaseDB;
-import lombok.var;
 
 import java.sql.Timestamp;
 import java.util.List;

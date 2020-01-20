@@ -27,16 +27,27 @@ public class SimpleProduct {
     public long getId() {
         return id.get();
     }
-    public String getName() { return name.get(); }
-    public double getPrice() { return price.get(); }
-    public int getAmount() { return amount.get(); }
 
-    public void setPrice(SimpleDoubleProperty a) {price = a;}
+    public String getName() {
+        return name.get();
+    }
+
+    public double getPrice() {
+        return price.get();
+    }
+
+    public int getAmount() {
+        return amount.get();
+    }
+
+    public void setPrice(SimpleDoubleProperty a) {
+        price = a;
+    }
 
     public static ObservableList<SimpleProduct> getListOfProduct() {
         ObservableList<SimpleProduct> list = FXCollections.observableArrayList();
         List<Product> products = ProductDAO.getAll();
-        for (int i=0; i<products.size(); i++) {
+        for (int i = 0; i < products.size(); i++) {
             list.add(new SimpleProduct(
                     products.get(i).getId(),
                     products.get(i).getName(),

@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.var;
 
 import java.io.IOException;
 
@@ -38,11 +37,10 @@ public class SaleMenu {
 
     public void manageStart() throws IOException {
         PermissionChecker pc = new PermissionChecker();
-        if(pc.checkPermission(7)) {
+        if (pc.checkPermission(7)) {
             primaryStage.setScene(new SaleManagement(primaryStage).getScene());
             primaryStage.show();
-        }else
-        {
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR,
                     "You have no manager right's",
                     ButtonType.OK);
@@ -50,7 +48,7 @@ public class SaleMenu {
         }
     }
 
-    public void goBack(){
+    public void goBack() {
         primaryStage.close();
     }
 }

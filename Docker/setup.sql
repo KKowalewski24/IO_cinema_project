@@ -1,7 +1,7 @@
-create database IO;
-go
+CREATE DATABASE io;
+GO
 
-use IO;
+USE io;
 --------------------------------------------------------------------------------------------
 --- TABLE DEFINITION
 --- SETTINGS  - Table contains settings of system
@@ -9,34 +9,36 @@ use IO;
 --- drop table SETTINGS
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='SETTINGS' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table SETTINGS';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'SETTINGS'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table SETTINGS';
 
-	CREATE TABLE [dbo].SETTINGS(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].settings (
+            id     BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
+            -- Fields that will be joined with other tables
 
-	Symbol			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	Value			nvarchar(250)		collate Polish_CS_AS	not null default '',
+            -- Fields to be edited
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT SETTINGS_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            symbol NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            value  NVARCHAR(250) COLLATE polish_cs_as        NOT NULL DEFAULT '',
 
-END;
-go
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT settings_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'SETTINGS_Id')
 --BEGIN
@@ -52,34 +54,36 @@ go
 --- CREATED BY: PZajac
 --- drop table Product
 --------------------------------------------------------------------------------------------
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Product' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Product';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Product'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Product';
 
-	CREATE TABLE [dbo].Product(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
-	
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	Price			decimal(9,2)		not null default 0,
-	Amount 			int 				not null default 0 ,
+        CREATE TABLE [dbo].product (
+            id     BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Product_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name   NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            price  DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
+            amount INT                                       NOT NULL DEFAULT 0,
+
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT product_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Product_Id')
 --BEGIN
@@ -97,35 +101,37 @@ go
 --- drop table PackPO
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='PackPO' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table PackPO';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'PackPO'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table PackPO';
 
-	CREATE TABLE [dbo].PackPO(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].packpo (
+            id        BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	PackHId			bigint				not null default 0,
-	ProductId		bigint				not null default 0,
+            -- Fields that will be joined with other tables
+            packhid   BIGINT                                    NOT NULL DEFAULT 0,
+            productid BIGINT                                    NOT NULL DEFAULT 0,
 
-	-- Fields to be edited
-	Amount			decimal(9,2)		not null default 0,
+            -- Fields to be edited
+            amount    DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	_Price			decimal(9,2)		not null default 0,
+            -- Other fiels
 
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT PackPO_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+            _price    DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
 
-END;
-go
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT packpo_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'PackPO_Id')
 --BEGIN
@@ -142,33 +148,35 @@ go
 --- drop table PackH
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='PackH' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table PackH';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'PackH'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table PackH';
 
-	CREATE TABLE [dbo].PackH(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].packh (
+            id     BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
+            -- Fields that will be joined with other tables
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	_Price			decimal(9,2)		not null default 0,
+            -- Fields to be edited
+            name   NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
 
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT PackH_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+            _price DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT packh_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'PackH_Id')
 --BEGIN
@@ -185,35 +193,37 @@ go
 --- drop table SalePO
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='SalePO' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table SalePO';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'SalePO'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table SalePO';
 
-	CREATE TABLE [dbo].SalePO(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].salepo (
+            id      BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	PackHId			bigint				not null default 0,
-	SaleHId			bigint				not null default 0,
-	
-	-- Fields to be edited
-	Amount			decimal(9,2)		not null default 0,
+            -- Fields that will be joined with other tables
+            packhid BIGINT                                    NOT NULL DEFAULT 0,
+            salehid BIGINT                                    NOT NULL DEFAULT 0,
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	_Price			decimal(9,2)		not null default 0,
+            -- Fields to be edited
+            amount  DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
 
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT SalePO_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+            _price  DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT salepo_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'SalePO_Id')
 --BEGIN
@@ -230,34 +240,36 @@ go
 --- drop table SaleH
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='SaleH' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table SaleH';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'SaleH'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table SaleH';
 
-	CREATE TABLE [dbo].SaleH(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].saleh (
+            id       BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	UserId			bigint				not null default 0,
+            -- Fields that will be joined with other tables
+            userid   BIGINT                                    NOT NULL DEFAULT 0,
 
-	-- Fields to be edited
+            -- Fields to be edited
 
-	-- Other fiels
-	SaleDate		datetime2(3)		not null default '1900-01-01',
+            -- Other fiels
+            saledate DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
 
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	_Price			decimal(9,2)		not null default 0,
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+            _price   DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
 
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT SaleH_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT saleh_id PRIMARY KEY CLUSTERED (id)
+        );
 
-END;
-go
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'SaleH_Id')
 --BEGIN
@@ -274,37 +286,39 @@ go
 --- drop table Users
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Users' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Users';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Users'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Users';
 
-	CREATE TABLE [dbo].Users(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].users (
+            id           BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	FirstName		nvarchar(100)		collate Polish_CS_AS	not null default '',
-	LastName		nvarchar(100)		collate Polish_CS_AS	not null default '',
-	Login			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	PasswordHash	nvarchar(max)		collate Polish_CS_AS	not null default '',
-	CodeHash		nvarchar(max)		collate Polish_CS_AS	not null default '',
-	BaseSalary		decimal(9,2)		not null default 0,
-	HourlyRate		decimal(9,2)		not null default 0,
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Users_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            firstname    NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            lastname     NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            login        NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            passwordhash NVARCHAR(MAX) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            codehash     NVARCHAR(MAX) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            basesalary   DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
+            hourlyrate   DECIMAL(9, 2)                             NOT NULL DEFAULT 0,
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT users_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Users_Id')
 --BEGIN
@@ -321,32 +335,34 @@ go
 --- drop table UsersPermission
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='UsersPermission' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table UsersPermission';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'UsersPermission'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table UsersPermission';
 
-	CREATE TABLE [dbo].UsersPermission(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].userspermission (
+            id           BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	PermissionId	bigint				not null default 0,
-	UserId			bigint				not null default 0,
-	-- Fields to be edited
+            -- Fields that will be joined with other tables
+            permissionid BIGINT                                    NOT NULL DEFAULT 0,
+            userid       BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT UsersPermission_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT userspermission_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'UsersPermission_Id')
 --BEGIN
@@ -363,32 +379,34 @@ go
 --- drop table DICTPermission
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTPermission' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTPermission';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTPermission'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTPermission';
 
-	CREATE TABLE [dbo].DICTPermission(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictpermission (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(200)		not null default '',
-	Code			int					not null default 0,
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTPermission_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(200)                             NOT NULL DEFAULT '',
+            code INT                                       NOT NULL DEFAULT 0,
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictpermission_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTPermission_Id')
 --BEGIN
@@ -405,33 +423,35 @@ go
 --- drop table TnAData
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='TnAData' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table TnAData';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'TnAData'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table TnAData';
 
-	CREATE TABLE [dbo].TnAData(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].tnadata (
+            id       BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	UsersId			bigint				not null default 0,
-	-- Fields to be edited
-	DateDay			date				not null default '1900-01-01',
-	TimeFrom		datetime2(3)		not null default '1900-01-01',
-	TimeTo			datetime2(3)		not null default '1900-01-01',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT TnAData_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
+            usersid  BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
+            dateday  DATE                                      NOT NULL DEFAULT '1900-01-01',
+            timefrom DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            timeto   DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT tnadata_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'TnAData_Id')
 --BEGIN
@@ -448,32 +468,34 @@ go
 --- drop table Task
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Task' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Task';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Task'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Task';
 
-	CREATE TABLE [dbo].Task(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].task (
+            id          BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	Description		nvarchar(1000)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Task_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name        NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            description NVARCHAR(1000) COLLATE polish_cs_as       NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT task_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Task_Id')
 --BEGIN
@@ -490,34 +512,36 @@ go
 --- drop table Schedule
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Schedule' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Schedule';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Schedule'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Schedule';
 
-	CREATE TABLE [dbo].Schedule(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].schedule (
+            id              BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	UsersId			bigint				not null default 0,
-	TaskId			bigint				not null default 0,
-	SheduleStatusId	bigint				not null default 0,
-	-- Fields to be edited
-	DateFrom		datetime2(3)		not null default '1900-01-01',
-	DateTo			datetime2(3)		not null default '1900-01-01',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Schedule_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
+            usersid         BIGINT                                    NOT NULL DEFAULT 0,
+            taskid          BIGINT                                    NOT NULL DEFAULT 0,
+            shedulestatusid BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
+            datefrom        DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            dateto          DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT schedule_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Schedule_Id')
 --BEGIN
@@ -534,31 +558,33 @@ go
 --- drop table DICTScheduleStatus
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTScheduleStatus' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTScheduleStatus';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTScheduleStatus'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTScheduleStatus';
 
-	CREATE TABLE [dbo].DICTScheduleStatus(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictschedulestatus (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTScheduleStatus_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictschedulestatus_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTScheduleStatus_Id')
 --BEGIN
@@ -575,37 +601,39 @@ go
 --- drop table Movie
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Movie' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Movie';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Movie'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Movie';
 
-	CREATE TABLE [dbo].Movie(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
-	flg2D			tinyint				not null default 0,
-	flg3D			tinyint				not null default 0,
-	flgVR			tinyint				not null default 0,
-	-- Fields that will be joined with other tables
-	MovieTypeId		bigint				not null default 0,
-	MovieStateId	bigint				not null default 0,
+        CREATE TABLE [dbo].movie (
+            id           BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
+            flg2d        TINYINT                                   NOT NULL DEFAULT 0,
+            flg3d        TINYINT                                   NOT NULL DEFAULT 0,
+            flgvr        TINYINT                                   NOT NULL DEFAULT 0,
+            -- Fields that will be joined with other tables
+            movietypeid  BIGINT                                    NOT NULL DEFAULT 0,
+            moviestateid BIGINT                                    NOT NULL DEFAULT 0,
 
-	-- Fields to be edited
-	Title			nvarchar(250)		collate Polish_CS_AS	not null default '',
-	Description		nvarchar(1000)		collate Polish_CS_AS	not null default '',
-	MovieTime		time(3)				default '00:00:00',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Movie_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields to be edited
+            title        NVARCHAR(250) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            description  NVARCHAR(1000) COLLATE polish_cs_as       NOT NULL DEFAULT '',
+            movietime    TIME(3)                                            DEFAULT '00:00:00',
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT movie_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Movie_Id')
 --BEGIN
@@ -622,31 +650,33 @@ go
 --- drop table DICTMovieType
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTMovieType' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTMovieType';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTMovieType'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTMovieType';
 
-	CREATE TABLE [dbo].DICTMovieType(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictmovietype (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTMovieType_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictmovietype_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTMovieType_Id')
 --BEGIN
@@ -663,31 +693,33 @@ go
 --- drop table DICTMovieState
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTMovieState' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTMovieState';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTMovieState'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTMovieState';
 
-	CREATE TABLE [dbo].DICTMovieState(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictmoviestate (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTMovieState_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictmoviestate_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTMovieState_Id')
 --BEGIN
@@ -704,37 +736,39 @@ go
 --- drop table Hall
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Hall' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Hall';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Hall'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Hall';
 
-	CREATE TABLE [dbo].Hall(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
-	flg2D			tinyint				not null default 0,
-	flg3D			tinyint				not null default 0,
-	flgVR			tinyint				not null default 0,
-	flgX			int					not null default 0,
-	flgY			int					not null default 0,
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	Description		nvarchar(1000)		collate Polish_CS_AS	not null default '',
+        CREATE TABLE [dbo].hall (
+            id          BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
+            flg2d       TINYINT                                   NOT NULL DEFAULT 0,
+            flg3d       TINYINT                                   NOT NULL DEFAULT 0,
+            flgvr       TINYINT                                   NOT NULL DEFAULT 0,
+            flgx        INT                                       NOT NULL DEFAULT 0,
+            flgy        INT                                       NOT NULL DEFAULT 0,
+            -- Fields that will be joined with other tables
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Hall_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields to be edited
+            name        NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            description NVARCHAR(1000) COLLATE polish_cs_as       NOT NULL DEFAULT '',
 
-END;
-go
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT hall_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Hall_Id')
 --BEGIN
@@ -751,31 +785,33 @@ go
 --- drop table DICTPersonType
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTPersonType' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTPersonType';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTPersonType'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTPersonType';
 
-	CREATE TABLE [dbo].DICTPersonType(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictpersontype (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTPersonType_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictpersontype_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTPersonType_Id')
 --BEGIN
@@ -792,33 +828,35 @@ go
 --- drop table Person
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Person' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Person';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Person'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Person';
 
-	CREATE TABLE [dbo].Person(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].person (
+            id        BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	FirstName		nvarchar(100)		collate Polish_CS_AS	not null default '',
-	LastName		nvarchar(100)		collate Polish_CS_AS	not null default '',
-	DateBorn		datetime2(3)		not null default '1900-01-01',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Person_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            firstname NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            lastname  NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            dateborn  DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT person_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Person_Id')
 --BEGIN
@@ -835,33 +873,35 @@ go
 --- drop table MoviePersonPersonType
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='MoviePersonPersonType' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table MoviePersonPersonType';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'MoviePersonPersonType'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table MoviePersonPersonType';
 
-	CREATE TABLE [dbo].MoviePersonPersonType(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].moviepersonpersontype (
+            id           BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	MovieId			bigint				not null default 0,
-	PersonTypeId	bigint				not null default 0,
-	PersonId		bigint				not null default 0,
-	-- Fields to be edited
+            -- Fields that will be joined with other tables
+            movieid      BIGINT                                    NOT NULL DEFAULT 0,
+            persontypeid BIGINT                                    NOT NULL DEFAULT 0,
+            personid     BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT MoviePersonPersonType_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT moviepersonpersontype_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'MoviePersonPersonType_Id')
 --BEGIN
@@ -878,33 +918,35 @@ go
 --- drop table Performance
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Performance' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Performance';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Performance'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Performance';
 
-	CREATE TABLE [dbo].Performance(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].performance (
+            id              BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	HallId			bigint				not null default 0,
-	MovieId			bigint				not null default 0,
-	-- Fields to be edited
-	AdsDuration		bigint  		    not null default '0',
-	PerformanceType varchar(255)        not null default ''
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Performance_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
+            hallid          BIGINT                                    NOT NULL DEFAULT 0,
+            movieid         BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
+            adsduration     BIGINT                                    NOT NULL DEFAULT '0',
+            performancetype VARCHAR(255)                              NOT NULL DEFAULT ''
+                -- Other fiels
 
-END;
-go
+                -- Fields to be calculated only by triggers
+                -- This kind of fields must begin with '_'
+
+                -- This line should be removed if the table does not have primary key
+                CONSTRAINT performance_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Performance_Id')
 --BEGIN
@@ -921,35 +963,37 @@ go
 --- drop table Reservation
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='Reservation' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table Reservation';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'Reservation'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table Reservation';
 
-	CREATE TABLE [dbo].Reservation(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
-	flgPosX			int					not null default 0,
-	flgPosY			int					not null default 0,
+        CREATE TABLE [dbo].reservation (
+            id              BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
+            flgposx         INT                                       NOT NULL DEFAULT 0,
+            flgposy         INT                                       NOT NULL DEFAULT 0,
 
-	-- Fields that will be joined with other tables
-	StatusId		bigint				not null default 0,
-	TimeTableId		bigint				not null default 0,
-	ReservationDate	datetime2(3)		not null default '1900-01-01',
-	-- Fields to be edited
+            -- Fields that will be joined with other tables
+            statusid        BIGINT                                    NOT NULL DEFAULT 0,
+            timetableid     BIGINT                                    NOT NULL DEFAULT 0,
+            reservationdate DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01',
+            -- Fields to be edited
 
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT Reservation_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Other fiels
 
-END;
-go
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT reservation_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'Reservation_Id')
 --BEGIN
@@ -966,31 +1010,33 @@ go
 --- drop table DICTReservationStatus
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='DICTReservationStatus' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table DICTReservationStatus';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'DICTReservationStatus'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table DICTReservationStatus';
 
-	CREATE TABLE [dbo].DICTReservationStatus(
-	Id				BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].dictreservationstatus (
+            id   BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	
-	-- Fields to be edited
-	Name			nvarchar(100)		collate Polish_CS_AS	not null default '',
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT DICTReservationStatus_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
 
-END;
-go
+            -- Fields to be edited
+            name NVARCHAR(100) COLLATE polish_cs_as        NOT NULL DEFAULT '',
+            -- Other fiels
+
+            -- Fields to be calculated only by triggers
+            -- This kind of fields must begin with '_'
+
+            -- This line should be removed if the table does not have primary key
+            CONSTRAINT dictreservationstatus_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'DICTReservationStatus_Id')
 --BEGIN
@@ -1007,31 +1053,33 @@ go
 --- drop table TimeTable
 --------------------------------------------------------------------------------------------
 
-IF db_name()<>'master' and
-   not exists (	select * from INFORMATION_SCHEMA.TABLES
-		where table_name='TimeTable' and table_type='BASE TABLE')
-BEGIN
-	Print 'Creating table TimeTable';
+IF db_name() <> 'master' AND
+   NOT exists(SELECT *
+              FROM information_schema.tables
+              WHERE table_name = 'TimeTable'
+                AND table_type = 'BASE TABLE')
+    BEGIN
+        PRINT 'Creating table TimeTable';
 
-	CREATE TABLE [dbo].TimeTable(
-	Id		BIGINT IDENTITY(1,1) NOT FOR REPLICATION NOT NULL,	-- Primary Key
-	-- Status-like fields
+        CREATE TABLE [dbo].timetable (
+            id              BIGINT IDENTITY (1,1) NOT FOR REPLICATION NOT NULL, -- Primary Key
+            -- Status-like fields
 
-	-- Fields that will be joined with other tables
-	PerformanceId	bigint				not null default 0,
-	-- Fields to be edited
-	PerformanceDate	datetime2(3)		not null default '1900-01-01'
-	-- Other fiels
-	
-	-- Fields to be calculated only by triggers
-	-- This kind of fields must begin with '_'
-	
-	-- This line should be removed if the table does not have primary key
-	CONSTRAINT TimeTable_Id PRIMARY KEY CLUSTERED (Id)
-  	);
+            -- Fields that will be joined with other tables
+            performanceid   BIGINT                                    NOT NULL DEFAULT 0,
+            -- Fields to be edited
+            performancedate DATETIME2(3)                              NOT NULL DEFAULT '1900-01-01'
+                -- Other fiels
 
-END;
-go
+                -- Fields to be calculated only by triggers
+                -- This kind of fields must begin with '_'
+
+                -- This line should be removed if the table does not have primary key
+                CONSTRAINT timetable_id PRIMARY KEY CLUSTERED (id)
+        );
+
+    END;
+GO
 -- This line should be removed if the table has primary key
 --if not exists (select * from sysindexes where name like 'TimeTable_Id')
 --BEGIN

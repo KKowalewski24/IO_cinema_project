@@ -31,7 +31,8 @@ public class AssignTaskDialog implements Initializable {
             this.parent = parent;
             this.user = user;
             this.time = time;
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler/AssignTaskDialog.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler" +
+                    "/AssignTaskDialog.fxml"));
             fxmlLoader.setController(this);
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setScene(scene);
@@ -66,8 +67,7 @@ public class AssignTaskDialog implements Initializable {
         stage.close();
     }
 
-    private class TaskStringConverter extends StringConverter<Task>
-    {
+    private class TaskStringConverter extends StringConverter<Task> {
         @Override
         public String toString(Task task) {
             return task.getName();

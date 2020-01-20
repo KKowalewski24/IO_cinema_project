@@ -12,65 +12,86 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="738.0" prefWidth="1136.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.MainMenu">
+<VBox prefHeight="738.0" prefWidth="1136.0" xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.MainMenu">
     <!--<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.MainMenu">-->
     <!--<VBox prefHeight="738.0" prefWidth="1136.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.MainMenu">-->
     <children>
-        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" stylesheets="@MainMenuButton.css" VBox.vgrow="ALWAYS">
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0"
+                    stylesheets="@MainMenuButton.css" VBox.vgrow="ALWAYS">
             <children>
-            <GridPane alignment="CENTER" layoutX="52.0" layoutY="34.0" prefHeight="275.0" prefWidth="1017.0" styleClass="buttonsgrid">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                      <Button fx:id="salesModuleButton" mnemonicParsing="false" onMouseClicked="#openSalesModule" styleClass="mainmenubutton" text="Sales" textAlignment="CENTER">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                      <Button fx:id="employeeModuleButton" mnemonicParsing="false" onMouseClicked="#openEmployeeModule" styleClass="mainmenubutton" text="Employees" textAlignment="CENTER" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                      <Button fx:id="raportModuleButton" mnemonicParsing="false" onMouseClicked="#openRaportModule" styleClass="mainmenubutton" text="Reports" textAlignment="CENTER" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                      <Button fx:id="timetableModuleButton" mnemonicParsing="false" onMouseClicked="#openTimetableModule" styleClass="mainmenubutton" text="Timetable" textAlignment="CENTER" GridPane.columnIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                      <Button fx:id="movieModuleButton" mnemonicParsing="false" onMouseClicked="#openMovieModule" styleClass="mainmenubutton" text="Movies" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-                      <Button fx:id="settingsButton" mnemonicParsing="false" onMouseClicked="#openSettings" styleClass="mainmenubutton" text="SETTINGS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Button>
-               </children>
-            </GridPane>
-            <Button fx:id="logoutButton" layoutX="52.0" layoutY="442.0" mnemonicParsing="false" onMouseClicked="#logOut" styleClass="logoutbutton" text="Log out" textAlignment="CENTER">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <Button fx:id="pPermission" layoutX="227.0" layoutY="442.0" mnemonicParsing="false" onMouseClicked="#printPermission" styleClass="mainmenubutton" text="Show Permission" textAlignment="CENTER">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+                <GridPane alignment="CENTER" layoutX="52.0" layoutY="34.0" prefHeight="275.0"
+                          prefWidth="1017.0" styleClass="buttonsgrid">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="salesModuleButton" mnemonicParsing="false"
+                                onMouseClicked="#openSalesModule" styleClass="mainmenubutton"
+                                text="Sales" textAlignment="CENTER">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                        <Button fx:id="employeeModuleButton" mnemonicParsing="false"
+                                onMouseClicked="#openEmployeeModule" styleClass="mainmenubutton"
+                                text="Employees" textAlignment="CENTER" GridPane.rowIndex="1">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                        <Button fx:id="raportModuleButton" mnemonicParsing="false"
+                                onMouseClicked="#openRaportModule" styleClass="mainmenubutton"
+                                text="Reports" textAlignment="CENTER" GridPane.rowIndex="2">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                        <Button fx:id="timetableModuleButton" mnemonicParsing="false"
+                                onMouseClicked="#openTimetableModule" styleClass="mainmenubutton"
+                                text="Timetable" textAlignment="CENTER" GridPane.columnIndex="1">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                        <Button fx:id="movieModuleButton" mnemonicParsing="false"
+                                onMouseClicked="#openMovieModule" styleClass="mainmenubutton"
+                                text="Movies" textAlignment="CENTER" GridPane.columnIndex="1"
+                                GridPane.rowIndex="1">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                        <Button fx:id="settingsButton" mnemonicParsing="false"
+                                onMouseClicked="#openSettings" styleClass="mainmenubutton"
+                                text="SETTINGS" textAlignment="CENTER" GridPane.columnIndex="1"
+                                GridPane.rowIndex="2">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </Button>
+                    </children>
+                </GridPane>
+                <Button fx:id="logoutButton" layoutX="52.0" layoutY="442.0" mnemonicParsing="false"
+                        onMouseClicked="#logOut" styleClass="logoutbutton" text="Log out"
+                        textAlignment="CENTER">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
+                <Button fx:id="pPermission" layoutX="227.0" layoutY="442.0" mnemonicParsing="false"
+                        onMouseClicked="#printPermission" styleClass="mainmenubutton"
+                        text="Show Permission" textAlignment="CENTER">
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                </Button>
             </children>
         </AnchorPane>
     </children>

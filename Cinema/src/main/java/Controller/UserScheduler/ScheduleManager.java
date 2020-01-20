@@ -46,7 +46,7 @@ public class ScheduleManager {
         schedule.setTask(task);
         schedule.setScheduleStatus(this.getStatusById(1));
         schedule.setDateFrom(date);
-        schedule.setDateTo(new Timestamp(date.getTime() + (60*60*1000)));
+        schedule.setDateTo(new Timestamp(date.getTime() + (60 * 60 * 1000)));
         ScheduleDAO.insertUpdate(schedule);
         return schedule;
     }
@@ -58,7 +58,5 @@ public class ScheduleManager {
     public void deleteSchedule(Schedule schedule) {
         ScheduleDAO.delete(schedule);
     }
-
-
 
 }

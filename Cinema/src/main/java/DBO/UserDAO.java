@@ -3,7 +3,7 @@ package DBO;
 import Model.User;
 import Tools.BaseDB;
 import Tools.Filter;
-import lombok.var;
+
 import java.util.List;
 
 public class UserDAO {
@@ -41,6 +41,7 @@ public class UserDAO {
         }
         return execSQL(sql.toString());
     }
+
     public static void insertUpdate(User object) {
         var so = BaseDB.openConnection();
         so.beginTransaction();

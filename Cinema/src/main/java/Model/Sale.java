@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-
 @Entity
 @Table(name = "SaleH")
 public class Sale {
@@ -62,7 +61,6 @@ public class Sale {
         this.positions = new LinkedList<>();
         this.saleDate = new Timestamp(new Date().getTime());
     }
-
 
     public Sale(long userId, List<SalePO> positions, Timestamp saleDate) {
         this.userId = userId;

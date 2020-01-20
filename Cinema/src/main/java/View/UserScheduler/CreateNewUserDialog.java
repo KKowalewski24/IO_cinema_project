@@ -1,6 +1,5 @@
 package View.UserScheduler;
 
-
 import Model.User;
 import Tools.PermissionChecker;
 import javafx.application.Platform;
@@ -20,7 +19,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class CreateNewUserDialog implements Initializable {
-
 
     @FXML
     private Button cancel;
@@ -49,7 +47,8 @@ public class CreateNewUserDialog implements Initializable {
         try {
 
             this.parent = parent;
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler/CreateNewUserDialog.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler" +
+                    "/CreateNewUserDialog.fxml"));
             fxmlLoader.setController(this);
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setTitle("Create New User");
@@ -86,18 +85,17 @@ public class CreateNewUserDialog implements Initializable {
         ) {
             return false;
         }
-        if( baseSalary.getText().matches("\\d{0,7}([\\.]\\d{0,4})?")
-        && hourlyRate.getText().matches("\\d{0,7}([\\.]\\d{0,4})?")
+        if (baseSalary.getText().matches("\\d{0,7}([\\.]\\d{0,4})?")
+                && hourlyRate.getText().matches("\\d{0,7}([\\.]\\d{0,4})?")
         ) {
             return true;
-        }else return false;
+        } else return false;
 
     }
 
-
     @FXML
     private void create() {
-        if(!checkAllFields()) {
+        if (!checkAllFields()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error message");
             alert.setHeaderText(null);
@@ -126,6 +124,5 @@ public class CreateNewUserDialog implements Initializable {
     private void cancel() {
         stage.close();
     }
-
 
 }

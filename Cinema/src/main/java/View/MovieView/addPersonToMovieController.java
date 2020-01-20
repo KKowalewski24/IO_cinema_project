@@ -1,4 +1,5 @@
 package View.MovieView;
+
 import Controller.MovieManager;
 import DBO.PersonDAO;
 import DBO.PersonTypeDAO;
@@ -11,9 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ public class addPersonToMovieController implements Initializable {
     private addMovieController controller;
     private ObservableList<SimplePersonType> personTypes = FXCollections.observableArrayList();
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         list = getList();
@@ -47,25 +47,27 @@ public class addPersonToMovieController implements Initializable {
 
         //Listing personTypes in ComboBox
         List<PersonType> types = PersonTypeDAO.getAll();
-        for (int i=0; i<types.size(); i++) {
+        for (int i = 0; i < types.size(); i++) {
             personTypes.add(new SimplePersonType(types.get(i).getId(), types.get(i).getName()));
         }
         List typeList = new ArrayList();
-        for(int i=0; i<personTypes.size();i++){
+        for (int i = 0; i < personTypes.size(); i++) {
             typeList.add(personTypes.get(i).getType());
         }
         Role.getItems().addAll(typeList);
     }
+
     public ObservableList<SimplePerson> getList() {
         ObservableList<SimplePerson> list = FXCollections.observableArrayList();
         List<Person> persons = PersonDAO.getAll();
-        for (int i=0; i<persons.size(); i++) {
-            list.add(new SimplePerson(persons.get(i).getId(), persons.get(i).getFirstName(), persons.get(i).getLastName()));
+        for (int i = 0; i < persons.size(); i++) {
+            list.add(new SimplePerson(persons.get(i).getId(), persons.get(i).getFirstName(),
+                    persons.get(i).getLastName()));
         }
         return list;
     }
 
-    public void setController(addMovieController c){
+    public void setController(addMovieController c) {
         this.controller = c;
     }
 
@@ -81,7 +83,7 @@ public class addPersonToMovieController implements Initializable {
 
         Person p = MovieManager.createPerson(name, lastname, t);
         Long typeID;
-        for(int i=0; i<personTypes.size();i++){
+        for (int i = 0; i < personTypes.size(); i++) {
             if (personTypes.get(i).getType().equals((String) Role.getValue())) {
                 typeID = personTypes.get(i).getID();
                 List<PersonType> PT = PersonTypeDAO.getAllById(typeID);
@@ -92,11 +94,11 @@ public class addPersonToMovieController implements Initializable {
         MovieManager.workingPersons.add(temp);
     }
 
-    public void createPersonJob(){
+    public void createPersonJob() {
         SimplePerson p = table.getSelectionModel().getSelectedItem(); //person
         List<Person> persons = PersonDAO.getAllById(p.getID());
         Long typeID;
-        for(int i=0; i<personTypes.size();i++){
+        for (int i = 0; i < personTypes.size(); i++) {
             if (personTypes.get(i).getType().equals((String) Role.getValue())) {
                 typeID = personTypes.get(i).getID();
                 List<PersonType> PT = PersonTypeDAO.getAllById(typeID);
@@ -109,7 +111,7 @@ public class addPersonToMovieController implements Initializable {
     }
 
     public void onClickAddPerson() {
-        if(!checkAllFieldsSelectedPerson()) {
+        if (!checkAllFieldsSelectedPerson()) {
             return;
         }
         createPersonJob();
@@ -118,7 +120,7 @@ public class addPersonToMovieController implements Initializable {
     }
 
     public void onClickAddNewPerson() {
-        if(!checkAllFieldsNewPerson()) {
+        if (!checkAllFieldsNewPerson()) {
             return;
         }
         createNewPerson();
@@ -164,7 +166,8 @@ public class addPersonToMovieController implements Initializable {
     public boolean checkAllFieldsSelectedPerson() {
 
         if (table.getSelectionModel().getSelectedItem() == null) {
-            alertPopUp("You have to select a person from the table above - just click on person you are interested in.");
+            alertPopUp("You have to select a person from the table above - just click on person " +
+                    "you are interested in.");
             return false;
         }
 
@@ -189,17 +192,20 @@ public class addPersonToMovieController implements Initializable {
         private final SimpleStringProperty Name;
         private final SimpleStringProperty Lastname;
 
-        public SimplePerson(Long ID, String Name, String Lastname){
+        public SimplePerson(Long ID, String Name, String Lastname) {
             this.ID = new SimpleLongProperty(ID);
             this.Name = new SimpleStringProperty(Name);
             this.Lastname = new SimpleStringProperty(Lastname);
         }
-        public String getName(){
+
+        public String getName() {
             return Name.get();
         }
-        public String getLastname(){
+
+        public String getLastname() {
             return Lastname.get();
         }
+
         public long getID() {
             return ID.get();
         }
@@ -213,10 +219,14 @@ public class addPersonToMovieController implements Initializable {
             this.ID = new SimpleLongProperty(ID);
             this.type = new SimpleStringProperty(type);
         }
+
         public String getType() {
             return type.get();
         }
-        public Long getID() {return  ID.get();}
+
+        public Long getID() {
+            return ID.get();
+        }
     }
 
 }

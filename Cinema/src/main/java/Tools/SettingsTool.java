@@ -2,7 +2,6 @@ package Tools;
 
 import DBO.SettingsDAO;
 import Model.SETTINGS;
-import lombok.var;
 
 import java.util.HashMap;
 import java.util.List;

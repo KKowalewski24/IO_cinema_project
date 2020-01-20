@@ -14,13 +14,11 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.var;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -72,8 +70,7 @@ public class SaleCashbox {
         tableOfPackContent.setItems(packContentList);
     }
 
-
-    public void showPackContent(){
+    public void showPackContent() {
         int index = tableOfPack.getSelectionModel().selectedIndexProperty().get();
         packContentList.clear();
         packContentList = SimplePackPO.getContentOfPack((int) packs.get(index).getId());
@@ -87,17 +84,18 @@ public class SaleCashbox {
         primaryStage.show();
     }
 
-    public void addPackToOrder(){
+    public void addPackToOrder() {
         int selectedPack = tableOfPack.getSelectionModel().selectedIndexProperty().get();
         SimplePack simplePack = packs.get(selectedPack);
 
         boolean alreadyInPack = false;
 
-        for(int i = 0; i < orderContent.size(); i++){
-            if(orderContent.get(i).getPackHId() == simplePack.getId()){
+        for (int i = 0; i < orderContent.size(); i++) {
+            if (orderContent.get(i).getPackHId() == simplePack.getId()) {
 
                 Alert alert = new Alert(Alert.AlertType.ERROR,
-                        "This product is already in this Pack. Please, change amount instead of adding!",
+                        "This product is already in this Pack. Please, change amount instead of " +
+                                "adding!",
                         ButtonType.OK);
                 alert.showAndWait();
                 alreadyInPack = true;
@@ -105,7 +103,7 @@ public class SaleCashbox {
             }
         }
 
-        if(!alreadyInPack) {
+        if (!alreadyInPack) {
             TextInputDialog d1 = new TextInputDialog();
             d1.setTitle("How many packs do you wanna add?");
             d1.setContentText("Enter amount");
@@ -138,25 +136,31 @@ public class SaleCashbox {
                     int newAmountInOrder;
 
                     if (!keyExists) {
-                        newAmountInOrder = packContentList.get(i).getAmount() * Integer.valueOf(amount);
+                        newAmountInOrder =
+                                packContentList.get(i).getAmount() * Integer.valueOf(amount);
                         if (newAmountInOrder <= ((Integer) ProductDAO.getAmountById(packContentList.get(i).getProductId()).get(0))) {
                             checkerI.add(i);
                             checkerAmount.add(newAmountInOrder);
                             checkerKey.add(-1);
                         } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "There is not enough " + simplePack.getName() + " in magazine!", ButtonType.CLOSE);
+                            Alert alert = new Alert(Alert.AlertType.ERROR,
+                                    "There is not enough " + simplePack.getName() + " in magazine" +
+                                            "!", ButtonType.CLOSE);
                             alert.showAndWait();
                             enoughInMagazine = false;
                             break;
                         }
                     } else {
-                        newAmountInOrder = amountOfProductsInOrder.get(keyIndex).getValue() + (Integer.valueOf(amount) * packContentList.get(i).getAmount());
+                        newAmountInOrder =
+                                amountOfProductsInOrder.get(keyIndex).getValue() + (Integer.valueOf(amount) * packContentList.get(i).getAmount());
                         if (newAmountInOrder <= ((Integer) ProductDAO.getAmountById(packContentList.get(i).getProductId()).get(0))) {
                             checkerI.add(i);
                             checkerAmount.add(newAmountInOrder);
                             checkerKey.add(keyIndex);
                         } else {
-                            Alert alert = new Alert(Alert.AlertType.ERROR, "There is not enough " + simplePack.getName() + " in magazine!", ButtonType.CLOSE);
+                            Alert alert = new Alert(Alert.AlertType.ERROR,
+                                    "There is not enough " + simplePack.getName() + " in magazine" +
+                                            "!", ButtonType.CLOSE);
                             alert.showAndWait();
                             enoughInMagazine = false;
                             break;
@@ -164,7 +168,8 @@ public class SaleCashbox {
                     }
                 }
                 if (enoughInMagazine) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "SUCEEDED", ButtonType.CLOSE);
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "SUCEEDED",
+                            ButtonType.CLOSE);
                     alert.showAndWait();
 
                     orderContent.add(
@@ -195,7 +200,7 @@ public class SaleCashbox {
         }
     }
 
-    public void removePackFromOrder(){
+    public void removePackFromOrder() {
         int selectedPack = tableOfOrderContent.getSelectionModel().selectedIndexProperty().get();
         SimpleSale simpleSale = orderContent.get(selectedPack);
 
@@ -207,12 +212,13 @@ public class SaleCashbox {
                                     (simpleSale.productInSale.get(i).getValue() *
                                             simpleSale.getAmount()));
 
-                    if(newAmount == 0){
+                    if (newAmount == 0) {
                         amountOfProductsInOrder.remove(j);
                     } else {
-                        amountOfProductsInOrder.set(j, new Pair<>(amountOfProductsInOrder.get(j).getKey(), newAmount));
+                        amountOfProductsInOrder.set(j,
+                                new Pair<>(amountOfProductsInOrder.get(j).getKey(), newAmount));
                     }
-              }
+                }
             }
         }
         orderContent.remove(selectedPack);
@@ -220,8 +226,7 @@ public class SaleCashbox {
         calculatePrice();
     }
 
-
-    private double calculatePrice(){
+    private double calculatePrice() {
         double price = 0;
         for (SimpleSale simpleSale : orderContent) {
             price += simpleSale.getPrice();
@@ -229,7 +234,6 @@ public class SaleCashbox {
         priceOfOrder.setText("Price: " + price);
         return price;
     }
-
 
     public void confirmOrder() throws IOException {
 
@@ -240,15 +244,15 @@ public class SaleCashbox {
                 new BigDecimal(calculatePrice())
         );
 
-        for(int i = 0; i < orderContent.size(); i++){
-            order.add(new SalePO((Pack) PackDAO.getAllByID(orderContent.get(i).getPackHId()).get(0), new BigDecimal(orderContent.get(i).getAmount()) ));
+        for (int i = 0; i < orderContent.size(); i++) {
+            order.add(new SalePO((Pack) PackDAO.getAllByID(orderContent.get(i).getPackHId()).get(0), new BigDecimal(orderContent.get(i).getAmount())));
         }
         SaleDAO.insert(order);
 
-        for(int i = 0; i < amountOfProductsInOrder.size(); i++ ){
-            ProductDAO.updateAmount(amountOfProductsInOrder.get(i).getKey(),amountOfProductsInOrder.get(i).getValue());
+        for (int i = 0; i < amountOfProductsInOrder.size(); i++) {
+            ProductDAO.updateAmount(amountOfProductsInOrder.get(i).getKey(),
+                    amountOfProductsInOrder.get(i).getValue());
         }
-
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "Your order has been made. We'd print you a receipt but we really don't want to." +
@@ -267,7 +271,8 @@ public class SaleCashbox {
     }
 
     public void cancelOrder() throws IOException {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to cancel making this order?", ButtonType.YES, ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Do you want to cancel making this " +
+                "order?", ButtonType.YES, ButtonType.NO);
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {

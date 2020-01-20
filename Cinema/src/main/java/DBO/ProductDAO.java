@@ -2,7 +2,6 @@ package DBO;
 
 import Model.Product;
 import Tools.BaseDB;
-import lombok.var;
 import org.hibernate.query.Query;
 
 import java.util.List;
@@ -29,26 +28,26 @@ public class ProductDAO {
     public static String getNameById(long Id) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        List result = so.createSQLQuery("Select Name from Product where Id = " + String.valueOf(Id)).list();
+        List result =
+                so.createSQLQuery("Select Name from Product where Id = " + String.valueOf(Id)).list();
         so.getTransaction().commit();
         so.close();
         return result.get(0).toString();
     }
-
 
     public static void removeById(long Id) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
         Query query = so.createQuery("Delete from Product where Id = " + Id);
         query.executeUpdate();
-        Query query1= so.createQuery("Delete from PackPO where ProductId = " + Id);
+        Query query1 = so.createQuery("Delete from PackPO where ProductId = " + Id);
         query1.executeUpdate();
         so.getTransaction()
                 .commit();
         so.close();
     }
 
-    public static List getAllByID(long Id){
+    public static List getAllByID(long Id) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
         List result = so.createQuery("from Product where Id = " + String.valueOf(Id)).list();
@@ -57,10 +56,11 @@ public class ProductDAO {
         return result;
     }
 
-    public static List getAmountById(long Id){
+    public static List getAmountById(long Id) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        List result = so.createSQLQuery("Select amount from Product where Id = " + String.valueOf(Id)).list();
+        List result =
+                so.createSQLQuery("Select amount from Product where Id = " + String.valueOf(Id)).list();
         so.getTransaction().commit();
         so.close();
         return result;
@@ -69,7 +69,8 @@ public class ProductDAO {
     public static boolean updateAmount(long Id, int amount) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        Query query = so.createQuery("UPDATE Product SET Amount = Amount -'" + amount + "' WHERE Id = " + Id);
+        Query query = so.createQuery("UPDATE Product SET Amount = Amount -'" + amount + "' WHERE " +
+                "Id = " + Id);
         int res = query.executeUpdate();
         so.getTransaction()
                 .commit();
@@ -80,7 +81,8 @@ public class ProductDAO {
     public static boolean setAmount(long Id, int amount) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        Query query = so.createQuery("UPDATE Product SET Amount = '" + amount + "' WHERE Id = " + Id);
+        Query query =
+                so.createQuery("UPDATE Product SET Amount = '" + amount + "' WHERE Id = " + Id);
         int res = query.executeUpdate();
         so.getTransaction()
                 .commit();
@@ -88,11 +90,12 @@ public class ProductDAO {
         return res == 1;
     }
 
-    public static boolean changeName(long id, String newName){
+    public static boolean changeName(long id, String newName) {
 
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        Query query = so.createQuery("UPDATE Product SET Name = '" + newName + "' WHERE id = " + id);
+        Query query =
+                so.createQuery("UPDATE Product SET Name = '" + newName + "' WHERE id = " + id);
         int res = query.executeUpdate();
         so.getTransaction()
                 .commit();
@@ -100,17 +103,17 @@ public class ProductDAO {
         return res == 1;
     }
 
-    public static boolean changePrice(long id, String newPrice){
+    public static boolean changePrice(long id, String newPrice) {
 
         var so = BaseDB.openConnection();
         so.beginTransaction();
-        Query query = so.createQuery("UPDATE Product SET Price = '" + newPrice + "' WHERE id = " + id);
+        Query query =
+                so.createQuery("UPDATE Product SET Price = '" + newPrice + "' WHERE id = " + id);
         int res = query.executeUpdate();
         so.getTransaction()
                 .commit();
         so.close();
         return res == 1;
     }
-
 
 }

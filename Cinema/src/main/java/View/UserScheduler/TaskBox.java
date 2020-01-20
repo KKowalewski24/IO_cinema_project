@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -58,7 +57,7 @@ public class TaskBox extends VBox implements Initializable {
         this.getChildren().clear();
         this.getChildren().addAll(name, description);
         this.getStyleClass().clear();
-        switch ((int)schedule.getScheduleStatus().getId()) {
+        switch ((int) schedule.getScheduleStatus().getId()) {
             case -1:
                 this.getStyleClass().add("undefined");
                 break;

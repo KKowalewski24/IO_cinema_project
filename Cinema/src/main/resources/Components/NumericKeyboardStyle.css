@@ -7,7 +7,7 @@
     -fx-font-size: 24px;
 }
 
-.keyboardButton:hover{
+.keyboardButton:hover {
     -fx-border-color: white;
     -fx-border-width: 1px;
 }

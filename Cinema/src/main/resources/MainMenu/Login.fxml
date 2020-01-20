@@ -13,23 +13,31 @@
 <!--<?import View.Components.ButtonWithImage?>-->
 <!--<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.Login">-->
 <?import View.Components.*?>
-<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.Login" stylesheets="@Login.css">
-   <children>
-<!--       <HBox>-->
-<!--           <VBox alignment="BOTTOM_LEFT" styleClass="loginButtons" >-->
-<!--               <ButtonWithImage fx:id="closeBtn" onCustomClick="#closeApplication"/>-->
-<!--           </VBox>-->
-<!--       </HBox>-->
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.MainMenu.Login"
+           stylesheets="@Login.css">
+    <children>
+        <!--       <HBox>-->
+        <!--           <VBox alignment="BOTTOM_LEFT" styleClass="loginButtons" >-->
+        <!--               <ButtonWithImage fx:id="closeBtn" onCustomClick="#closeApplication"/>-->
+        <!--           </VBox>-->
+        <!--       </HBox>-->
 
-       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
-           <children>
-               <TextField fx:id="logInTextField" layoutX="66.0" layoutY="185.0" prefHeight="43.0" prefWidth="256.0" promptText="Login" styleClass="text-field" />
-               <PasswordField fx:id="passwordField" layoutX="66.0" layoutY="254.0" prefHeight="43.0" prefWidth="256.0" promptText="Password" styleClass="text-field" />
-               <Button fx:id="logInButton" layoutX="66.0" layoutY="311.0" mnemonicParsing="false" onMouseClicked="#logIn" styleClass="loginbutton" text="Log In" />
-               <Button fx:id="exitButton" layoutX="215.0" layoutY="311.0" mnemonicParsing="false" onMouseClicked="#exit" styleClass="exitbutton" text="Exit" />
-           </children>
-       </AnchorPane>
-      <NumericKeyboard  fx:id="keyboard" alignment="BOTTOM_RIGHT" onConfirm="#onConfirm"/>
-   </children>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0"
+                    VBox.vgrow="ALWAYS">
+            <children>
+                <TextField fx:id="logInTextField" layoutX="66.0" layoutY="185.0" prefHeight="43.0"
+                           prefWidth="256.0" promptText="Login" styleClass="text-field"/>
+                <PasswordField fx:id="passwordField" layoutX="66.0" layoutY="254.0"
+                               prefHeight="43.0" prefWidth="256.0" promptText="Password"
+                               styleClass="text-field"/>
+                <Button fx:id="logInButton" layoutX="66.0" layoutY="311.0" mnemonicParsing="false"
+                        onMouseClicked="#logIn" styleClass="loginbutton" text="Log In"/>
+                <Button fx:id="exitButton" layoutX="215.0" layoutY="311.0" mnemonicParsing="false"
+                        onMouseClicked="#exit" styleClass="exitbutton" text="Exit"/>
+            </children>
+        </AnchorPane>
+        <NumericKeyboard fx:id="keyboard" alignment="BOTTOM_RIGHT" onConfirm="#onConfirm"/>
+    </children>
 </StackPane>
 

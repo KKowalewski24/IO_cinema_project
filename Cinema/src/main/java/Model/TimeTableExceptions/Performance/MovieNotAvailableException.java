@@ -2,7 +2,8 @@ package Model.TimeTableExceptions.Performance;
 
 public class MovieNotAvailableException extends TimeTableCreationException {
 
-    public MovieNotAvailableException() {}
+    public MovieNotAvailableException() {
+    }
 
     public MovieNotAvailableException(String message) {
         super(message);

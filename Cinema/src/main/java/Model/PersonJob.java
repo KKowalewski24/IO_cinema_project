@@ -33,7 +33,6 @@ public class PersonJob {
     @Setter
     private Movie movie;
 
-
     public PersonJob() {
     }
 

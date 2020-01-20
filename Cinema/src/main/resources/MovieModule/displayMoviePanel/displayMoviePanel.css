@@ -1,4 +1,4 @@
-#edit{
+#edit {
     -fx-background-color: rgba(73, 214, 103, 0.7);
     -fx-border-width: 1px;
     -fx-border-color: #088a24;
@@ -8,7 +8,7 @@
     -fx-background-color: rgba(73, 214, 103, 1);
 }
 
-#delete{
+#delete {
     -fx-background-color: rgba(214, 54, 36, 0.7);
     -fx-border-width: 1px;
     -fx-border-color: #941001;

@@ -1,8 +1,8 @@
 package View.UserScheduler;
 
-import javafx.fxml.FXML;
 import Controller.UserScheduler.TaskManager;
 import Model.Task;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -35,7 +35,8 @@ public class TaskManagerPanel extends VBox implements Initializable {
     public TaskManagerPanel() {
         super();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler/TaskManagerPanelView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler" +
+                    "/TaskManagerPanelView.fxml"));
             fxmlLoader.setController(this);
             Node n = fxmlLoader.load();
             this.getChildren().add(n);

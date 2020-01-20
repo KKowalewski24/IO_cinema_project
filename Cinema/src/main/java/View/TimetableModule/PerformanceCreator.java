@@ -1,12 +1,17 @@
 package View.TimetableModule;
 
-import java.net.URL;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.ResourceBundle;
-
+import Controller.TimeTableController;
+import DBO.HallDAO;
+import DBO.MovieDAO;
+import Model.Hall;
+import Model.Movie;
+import Model.TimeTable;
+import Model.TimeTableExceptions.Performance.HallNotAvailableException;
+import Model.TimeTableExceptions.Performance.MovieNotAvailableException;
+import Model.TimeTableExceptions.Performance.TimeTableCreationException;
+import View.TimetableModule.Util.FxmlStageSetup;
+import View.TimetableModule.Util.FxmlUtilControls;
+import View.TimetableModule.Util.PopOutWindow;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -17,19 +22,13 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.input.MouseEvent;
 
-import Controller.TimeTableController;
-import DBO.HallDAO;
-import DBO.MovieDAO;
-import Model.Hall;
-import Model.Movie;
-import Model.Performance;
-import Model.TimeTable;
-import Model.TimeTableExceptions.Performance.HallNotAvailableException;
-import Model.TimeTableExceptions.Performance.MovieNotAvailableException;
-import Model.TimeTableExceptions.Performance.TimeTableCreationException;
-import View.TimetableModule.Util.FxmlStageSetup;
-import View.TimetableModule.Util.FxmlUtilControls;
-import View.TimetableModule.Util.PopOutWindow;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import static View.TimetableModule.Util.Constants.INITIAL_HOUR_VALUE;
 import static View.TimetableModule.Util.Constants.INITIAL_MINUTE_VALUE;
 import static View.TimetableModule.Util.Constants.MAX_HOUR_VALUE;
@@ -123,15 +122,17 @@ public class PerformanceCreator implements Initializable {
 
             comboBoxTitle.getSelectionModel().select(currentTimeTable.getPerformance().getMovie().getTitle());
             comboBoxHallNumber.getSelectionModel().select(currentTimeTable.getPerformance().getHall().getId());
-            if(currentTimeTable.getPerformance().getPerformanceType().equals("2D"))
-                fxmlUtilControls.setRadioButton((short)1, flg2D);
-            else if(currentTimeTable.getPerformance().getPerformanceType().equals("3D"))
-                fxmlUtilControls.setRadioButton((short)1, flg3D);
+            if (currentTimeTable.getPerformance().getPerformanceType().equals("2D"))
+                fxmlUtilControls.setRadioButton((short) 1, flg2D);
+            else if (currentTimeTable.getPerformance().getPerformanceType().equals("3D"))
+                fxmlUtilControls.setRadioButton((short) 1, flg3D);
             else
-                fxmlUtilControls.setRadioButton((short)1, flgVR);
+                fxmlUtilControls.setRadioButton((short) 1, flgVR);
             performanceDatePicker.setValue(currentTimeTable.getPerformanceDate().toLocalDateTime().toLocalDate());
-            fxmlUtilControls.setSpinnerValue(spinnerHour, currentTimeTable.getPerformanceDate().getHours());
-            fxmlUtilControls.setSpinnerValue(spinnerMinute, currentTimeTable.getPerformanceDate().getMinutes());
+            fxmlUtilControls.setSpinnerValue(spinnerHour,
+                    currentTimeTable.getPerformanceDate().getHours());
+            fxmlUtilControls.setSpinnerValue(spinnerMinute,
+                    currentTimeTable.getPerformanceDate().getMinutes());
         }
     }
 
@@ -153,21 +154,21 @@ public class PerformanceCreator implements Initializable {
             try {
                 TimeTableController controller = TimeTableController.getInstance();
                 String performanceType;
-                if(flag2dValue == 1)
+                if (flag2dValue == 1)
                     performanceType = "2D";
-                else if(flag3dValue == 1)
+                else if (flag3dValue == 1)
                     performanceType = "3D";
                 else
                     performanceType = "VR";
 
-                if(controller.getIsEditable()){
+                if (controller.getIsEditable()) {
                     controller.modifyTimeTable(
                             titleValue,
                             hallIdValue,
                             performanceType,
                             Timestamp.valueOf(performanceDate)
                     );
-                }else{
+                } else {
                     controller.addPerformanceToTimeTable(
                             titleValue,
                             hallIdValue,
@@ -186,7 +187,7 @@ public class PerformanceCreator implements Initializable {
                 popOutWindow.messageBox("Movie not available",
                         e.getMessage(),
                         Alert.AlertType.WARNING);
-            } catch (TimeTableCreationException e){
+            } catch (TimeTableCreationException e) {
                 //unused
             }
         } else {

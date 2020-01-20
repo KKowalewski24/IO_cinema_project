@@ -2,7 +2,6 @@ package DBO;
 
 import Model.Sale;
 import Tools.BaseDB;
-import lombok.var;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class SaleDAO {
         so.close();
     }
 
-    public static List getOrderContent(long Id){
+    public static List getOrderContent(long Id) {
         var so = BaseDB.openConnection();
         so.beginTransaction();
         List result = so.createQuery("from SalePO where SaleHId = " + String.valueOf(Id)).list();

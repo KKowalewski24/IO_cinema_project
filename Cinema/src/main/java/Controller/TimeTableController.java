@@ -1,25 +1,26 @@
 package Controller;
 
-import java.sql.Timestamp;
-
 import DBO.TimeTableDAO;
 import Model.Performance;
 import Model.TimeTable;
 import Model.TimeTableExceptions.Performance.TimeTableCreationException;
+
+import java.sql.Timestamp;
 
 public class TimeTableController {
 
     /* Singletone */
     private static TimeTableController instance = null;
 
-    public static TimeTableController getInstance(){
-        if(instance == null){
+    public static TimeTableController getInstance() {
+        if (instance == null) {
             instance = new TimeTableController();
         }
         return instance;
     }
 
-    private TimeTableController() {}
+    private TimeTableController() {
+    }
 
     /* Fields */
 
@@ -28,19 +29,22 @@ public class TimeTableController {
 
     /* Methods */
 
-    public void addPerformanceToTimeTable(String title, long hallId, String performanceType, Timestamp performanceDate) throws TimeTableCreationException{
+    public void addPerformanceToTimeTable(String title, long hallId, String performanceType,
+                                          Timestamp performanceDate) throws TimeTableCreationException {
         Performance performance = new Performance(title, hallId, performanceType);
         TimeTable timetable = new TimeTable(performance, performanceDate);
         TimeTableDAO.add(timetable);
     }
 
-    public void modifyTimeTable(String title, long hallId, String performanceType, Timestamp performanceDate) throws TimeTableCreationException{
-        Performance performance = new Performance(title, hallId, performanceType, currentTimeTable.getPerformance().getId());
+    public void modifyTimeTable(String title, long hallId, String performanceType,
+                                Timestamp performanceDate) throws TimeTableCreationException {
+        Performance performance = new Performance(title, hallId, performanceType,
+                currentTimeTable.getPerformance().getId());
         TimeTable timetable = new TimeTable(performance, performanceDate, currentTimeTable.getId());
         TimeTableDAO.merge(timetable);
     }
 
-    public void deleteTimeTable(TimeTable timeTable){
+    public void deleteTimeTable(TimeTable timeTable) {
         TimeTableDAO.delete(timeTable);
     }
 

@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -39,7 +38,8 @@ public class ModifyTaskDialog implements Initializable {
         try {
             this.parent = parent;
             this.schedule = schedule;
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler/ModifyTaskDialog.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/UserScheduler" +
+                    "/ModifyTaskDialog.fxml"));
             fxmlLoader.setController(this);
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setScene(scene);
@@ -99,8 +99,7 @@ public class ModifyTaskDialog implements Initializable {
         stage.close();
     }
 
-    private class TaskStringConverter extends StringConverter<Task>
-    {
+    private class TaskStringConverter extends StringConverter<Task> {
         @Override
         public String toString(Task task) {
             return task.getName();
@@ -112,8 +111,7 @@ public class ModifyTaskDialog implements Initializable {
         }
     }
 
-    private class ScheduleStatusStringConverter extends StringConverter<ScheduleStatus>
-    {
+    private class ScheduleStatusStringConverter extends StringConverter<ScheduleStatus> {
         @Override
         public String toString(ScheduleStatus status) {
             return status.getName();

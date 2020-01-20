@@ -2,7 +2,6 @@ package DBO;
 
 import Tools.BaseDB;
 import Tools.Filter;
-import lombok.var;
 
 import java.util.List;
 

@@ -34,16 +34,16 @@ public class SettingsMenu implements Initializable {
         ticketPriceVR.setText(SettingsTool.getSetting("TicketPriceVR"));
     }
 
-    public void save(MouseEvent mouseEvent){
+    public void save(MouseEvent mouseEvent) {
         SettingsTool.setSettings("AddTime", addTime.getText());
         SettingsTool.setSettings("TicketPrice2D", ticketPrice2D.getText());
         SettingsTool.setSettings("TicketPrice3D", ticketPrice3D.getText());
         SettingsTool.setSettings("TicketPriceVR", ticketPriceVR.getText());
         SettingsTool.saveSettings();
-        ((Stage)(((Button)mouseEvent.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) mouseEvent.getSource()).getScene().getWindow())).close();
     }
 
-    public void cancel(MouseEvent mouseEvent){
-        ((Stage)(((Button)mouseEvent.getSource()).getScene().getWindow())).close();
+    public void cancel(MouseEvent mouseEvent) {
+        ((Stage) (((Button) mouseEvent.getSource()).getScene().getWindow())).close();
     }
 }

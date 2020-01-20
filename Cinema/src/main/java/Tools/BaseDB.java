@@ -1,13 +1,10 @@
 package Tools;
 
-import lombok.var;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
-import java.util.List;
 
 public class BaseDB {
 
@@ -22,7 +19,8 @@ public class BaseDB {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();
-            // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+            // The registry would be destroyed by the SessionFactory, but we had trouble building
+            // the SessionFactory
             // so destroy it manually.
             StandardServiceRegistryBuilder.destroy(registry);
         }

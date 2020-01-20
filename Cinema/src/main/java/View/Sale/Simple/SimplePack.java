@@ -1,7 +1,6 @@
 package View.Sale.Simple;
 
 import DBO.PackDAO;
-import DBO.ProductDAO;
 import Model.Pack;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleLongProperty;
@@ -25,13 +24,19 @@ public class SimplePack {
     public long getId() {
         return id.get();
     }
-    public String getName() { return name.get(); }
-    public double getPrice() { return price.get(); }
+
+    public String getName() {
+        return name.get();
+    }
+
+    public double getPrice() {
+        return price.get();
+    }
 
     public static ObservableList<SimplePack> getListOfPacks() {
         ObservableList<SimplePack> list = FXCollections.observableArrayList();
         List<Pack> packs = PackDAO.getAll();
-        for (int i=0; i<packs.size(); i++) {
+        for (int i = 0; i < packs.size(); i++) {
             list.add(new SimplePack(
                     packs.get(i).getId(),
                     packs.get(i).getName(),

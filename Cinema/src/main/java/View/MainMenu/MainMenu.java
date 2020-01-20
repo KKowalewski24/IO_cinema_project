@@ -8,10 +8,8 @@ import View.Sale.SaleMenu;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 
@@ -37,7 +35,8 @@ public class MainMenu {
         PermissionChecker pc = new PermissionChecker();
 //        System.out.println(pc.getPermissionsList());
         pc.prettyPermissions();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, pc.prettyPermissions(), ButtonType.YES);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, pc.prettyPermissions(),
+                ButtonType.YES);
         alert.setTitle("Information");
         alert.setHeaderText("Available Permissions");
         alert.showAndWait();
@@ -46,16 +45,19 @@ public class MainMenu {
     public void openTimetableModule(MouseEvent mouseEvent) throws IOException {
         PermissionChecker pc = new PermissionChecker();
         if (pc.checkPermission(10)) {
-            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/TimetableModule/TimetablePanel/TimetablePanel.fxml"));
+            Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/TimetableModule" +
+                    "/TimetablePanel/TimetablePanel.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(fxmlLoader);
-//        scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie.css").toExternalForm());
+//        scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie
+//        .css").toExternalForm());
             stage.setScene(scene);
             stage.setTitle("Timetable panel");
             stage.setResizable(false);
             stage.show();
         } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "You do not have sufficient permissions to access this ares", ButtonType.OK);
+            Alert alert = new Alert(Alert.AlertType.ERROR, "You do not have sufficient " +
+                    "permissions to access this ares", ButtonType.OK);
             alert.setTitle("Error");
             alert.setHeaderText("Insufficient Permissions");
             alert.showAndWait();
@@ -69,10 +71,12 @@ public class MainMenu {
     }
 
     public void openRaportModule(MouseEvent mouseEvent) throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/ReportModule/ReportPanel/mainReport.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/ReportModule/ReportPanel" +
+                "/mainReport.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
-//        scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie.css").toExternalForm());
+//        scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie
+//        .css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Raport panel");
         stage.setResizable(false);
@@ -80,7 +84,8 @@ public class MainMenu {
     }
 
     public void openEmployeeModule(MouseEvent mouseEvent) throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/UserScheduler/UserSchedulerView.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/UserScheduler" +
+                "/UserSchedulerView.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
         stage.setScene(scene);
@@ -90,7 +95,8 @@ public class MainMenu {
     }
 
     public void openMovieModule(MouseEvent mouseEvent) throws IOException {
-        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel/mainMovie.fxml"));
+        Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MovieModule/MoviePanel" +
+                "/mainMovie.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader);
         scene.getStylesheets().add(getClass().getResource("/MovieModule/MoviePanel/mainMovie.css").toExternalForm());
@@ -100,7 +106,6 @@ public class MainMenu {
         stage.show();
         StageManager.mainStage = stage;
     }
-
 
     public void printCurrentUser(MouseEvent mouseEvent) {
         PermissionChecker pc = new PermissionChecker();
@@ -124,14 +129,12 @@ public class MainMenu {
 
     public void logOut(MouseEvent mouseEvent) throws IOException {
 
-
         LPermissionController.getInstance().logOut();
         Parent fxmlLoader = FXMLLoader.load(getClass().getResource("/MainMenu/Login.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(fxmlLoader, Program.screenBounds.getWidth(), Program.screenBounds
                 .getHeight());
         Program.getPrimaryStage().setScene(scene);
-
 
     }
 }

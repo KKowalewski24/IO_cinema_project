@@ -7,7 +7,6 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-
 @Entity
 @Table(name = "SalePO")
 public class SalePO {

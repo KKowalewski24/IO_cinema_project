@@ -2,7 +2,6 @@ package DBO;
 
 import Model.Reservation;
 import Tools.BaseDB;
-import lombok.var;
 
 import java.util.List;
 
